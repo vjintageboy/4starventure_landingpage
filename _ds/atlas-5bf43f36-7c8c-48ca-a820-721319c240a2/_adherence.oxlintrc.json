@@ -1,0 +1,508 @@
+{
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "rules": {
+    "react/forbid-elements": [
+      "warn",
+      {
+        "forbid": []
+      }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "patterns": [
+          {
+            "group": [
+              "components/general/AovChart/**",
+              "components/general/ConversionChart/**",
+              "components/general/DateRangePicker/**",
+              "components/general/EmptyState/**",
+              "components/general/IconAddressAlert/**",
+              "components/general/IconSpinner/**",
+              "components/general/InlineDateRangeCalendar/**",
+              "components/general/MetricStrip/**",
+              "components/general/PageHeader/**",
+              "components/general/ProductBarChart/**",
+              "components/general/RevenueChart/**",
+              "components/general/Skeleton/**",
+              "components/general/StatusBadge/**",
+              "components/general/StoreBarChart/**"
+            ],
+            "message": "Import design-system components from 'index.js', not component internals."
+          }
+        ]
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "Literal[value=/#[0-9a-fA-F]{3,8}\\b/]",
+        "message": "Raw hex color — use a design-system color token via var()."
+      },
+      {
+        "selector": "Literal[value=/\\b\\d+px\\b/]",
+        "message": "Raw px value — use a design-system spacing token via var()."
+      },
+      {
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Sohne))/i]",
+        "message": "Font not provided by the design system. Available: Sohne."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='AovChart'] > JSXAttribute > JSXIdentifier[name!=/^(?:buckets|currency|mixedCurrency|key|ref|className|style|children)$/]",
+        "message": "<AovChart> doesn't accept that prop. Declared props: buckets, currency, mixedCurrency."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='ConversionChart'] > JSXAttribute > JSXIdentifier[name!=/^(?:buckets|key|ref|className|style|children)$/]",
+        "message": "<ConversionChart> doesn't accept that prop. Declared props: buckets."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='DateRangePicker'] > JSXAttribute > JSXIdentifier[name!=/^(?:from|to|onSelect|placeholder|key|ref|className|style|children)$/]",
+        "message": "<DateRangePicker> doesn't accept that prop. Declared props: from, to, onSelect, placeholder."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='EmptyState'] > JSXAttribute > JSXIdentifier[name!=/^(?:icon|title|description|action|key|ref|className|style|children)$/]",
+        "message": "<EmptyState> doesn't accept that prop. Declared props: icon, title, description, action."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='InlineDateRangeCalendar'] > JSXAttribute > JSXIdentifier[name!=/^(?:from|to|onSelect|key|ref|className|style|children)$/]",
+        "message": "<InlineDateRangeCalendar> doesn't accept that prop. Declared props: from, to, onSelect."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='MetricStrip'] > JSXAttribute > JSXIdentifier[name!=/^(?:lead|detail|key|ref|className|style|children)$/]",
+        "message": "<MetricStrip> doesn't accept that prop. Declared props: lead, detail."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='PageHeader'] > JSXAttribute > JSXIdentifier[name!=/^(?:title|description|badges|actions|key|ref|className|style|children)$/]",
+        "message": "<PageHeader> doesn't accept that prop. Declared props: title, description, badges, actions."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='ProductBarChart'] > JSXAttribute > JSXIdentifier[name!=/^(?:title|data|currency|mixedCurrency|metric|key|ref|className|style|children)$/]",
+        "message": "<ProductBarChart> doesn't accept that prop. Declared props: title, data, currency, mixedCurrency, metric."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='ProductBarChart'] > JSXAttribute[name.name='metric'] > Literal[value!=/^(?:revenue|units|orders)$/]",
+        "message": "<ProductBarChart> metric must be one of 'revenue' | 'units' | 'orders'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='RevenueChart'] > JSXAttribute > JSXIdentifier[name!=/^(?:buckets|currency|mixedCurrency|granularityLabel|key|ref|className|style|children)$/]",
+        "message": "<RevenueChart> doesn't accept that prop. Declared props: buckets, currency, mixedCurrency, granularityLabel."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Skeleton'] > JSXAttribute > JSXIdentifier[name!=/^(?:className|key|ref|className|style|children)$/]",
+        "message": "<Skeleton> doesn't accept that prop. Declared props: className."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='StatusBadge'] > JSXAttribute > JSXIdentifier[name!=/^(?:variant|children|key|ref|className|style|children)$/]",
+        "message": "<StatusBadge> doesn't accept that prop. Declared props: variant, children."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='StatusBadge'] > JSXAttribute[name.name='variant'] > Literal[value!=/^(?:success|warning|danger|info|neutral)$/]",
+        "message": "<StatusBadge> variant must be one of 'success' | 'warning' | 'danger' | 'info' | 'neutral'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='StoreBarChart'] > JSXAttribute > JSXIdentifier[name!=/^(?:data|currency|mixedCurrency|key|ref|className|style|children)$/]",
+        "message": "<StoreBarChart> doesn't accept that prop. Declared props: data, currency, mixedCurrency."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/index.js"
+      ],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
+  "x-omelette": {
+    "components": {
+      "AovChart": {
+        "replaces": []
+      },
+      "ConversionChart": {
+        "replaces": []
+      },
+      "DateRangePicker": {
+        "replaces": []
+      },
+      "EmptyState": {
+        "replaces": []
+      },
+      "IconAddressAlert": {
+        "replaces": []
+      },
+      "IconSpinner": {
+        "replaces": []
+      },
+      "InlineDateRangeCalendar": {
+        "replaces": []
+      },
+      "MetricStrip": {
+        "replaces": []
+      },
+      "PageHeader": {
+        "replaces": []
+      },
+      "ProductBarChart": {
+        "replaces": []
+      },
+      "RevenueChart": {
+        "replaces": []
+      },
+      "Skeleton": {
+        "replaces": []
+      },
+      "StatusBadge": {
+        "replaces": []
+      },
+      "StoreBarChart": {
+        "replaces": []
+      }
+    },
+    "tokens": [
+      "--accent",
+      "--accent-active",
+      "--accent-hover",
+      "--accent-strong",
+      "--accent-weak",
+      "--animate-pulse",
+      "--animate-spin",
+      "--bg",
+      "--border",
+      "--border-strong",
+      "--cal-day-button-size",
+      "--cal-day-size",
+      "--color-accent",
+      "--color-accent-strong",
+      "--color-accent-weak",
+      "--color-border",
+      "--color-border-strong",
+      "--color-ink-muted",
+      "--color-surface",
+      "--color-white",
+      "--container-3xl",
+      "--container-4xl",
+      "--container-lg",
+      "--container-md",
+      "--container-sm",
+      "--container-xl",
+      "--container-xs",
+      "--danger",
+      "--danger-bg",
+      "--default-font-family",
+      "--default-mono-font-family",
+      "--default-transition-duration",
+      "--default-transition-timing-function",
+      "--dur",
+      "--dur-fast",
+      "--ease-in-out",
+      "--ease-out-quart",
+      "--font-sans",
+      "--font-sohne",
+      "--font-weight-medium",
+      "--font-weight-normal",
+      "--font-weight-semibold",
+      "--info",
+      "--info-bg",
+      "--ink",
+      "--ink-muted",
+      "--ink-secondary",
+      "--neutral",
+      "--neutral-bg",
+      "--panel",
+      "--radius-lg",
+      "--radius-md",
+      "--radius-xl",
+      "--rdp-accent-background-color",
+      "--rdp-accent-color",
+      "--rdp-animation_duration",
+      "--rdp-animation_timing",
+      "--rdp-day-height",
+      "--rdp-day-width",
+      "--rdp-day_button-border",
+      "--rdp-day_button-border-radius",
+      "--rdp-day_button-height",
+      "--rdp-day_button-width",
+      "--rdp-disabled-opacity",
+      "--rdp-dropdown-gap",
+      "--rdp-gradient-direction",
+      "--rdp-months-gap",
+      "--rdp-nav-height",
+      "--rdp-nav_button-disabled-opacity",
+      "--rdp-nav_button-height",
+      "--rdp-nav_button-width",
+      "--rdp-outside-opacity",
+      "--rdp-range_end-background",
+      "--rdp-range_end-color",
+      "--rdp-range_end-date-background-color",
+      "--rdp-range_middle-background-color",
+      "--rdp-range_middle-color",
+      "--rdp-range_start-background",
+      "--rdp-range_start-color",
+      "--rdp-range_start-date-background-color",
+      "--rdp-selected-border",
+      "--rdp-today-color",
+      "--rdp-week_number-border",
+      "--rdp-week_number-border-radius",
+      "--rdp-week_number-height",
+      "--rdp-week_number-opacity",
+      "--rdp-week_number-width",
+      "--rdp-weekday-opacity",
+      "--rdp-weekday-padding",
+      "--rdp-weekday-text-align",
+      "--rdp-weeknumber-text-align",
+      "--spacing",
+      "--success",
+      "--success-bg",
+      "--surface",
+      "--text-2xl",
+      "--text-2xl--line-height",
+      "--text-base",
+      "--text-base--line-height",
+      "--text-lg",
+      "--text-lg--line-height",
+      "--text-sm",
+      "--text-sm--line-height",
+      "--text-xl",
+      "--text-xl--line-height",
+      "--text-xs",
+      "--text-xs--line-height",
+      "--tracking-tight",
+      "--tracking-wide",
+      "--tw-blur",
+      "--tw-border-style",
+      "--tw-brightness",
+      "--tw-contrast",
+      "--tw-divide-x-reverse",
+      "--tw-divide-y-reverse",
+      "--tw-drop-shadow",
+      "--tw-drop-shadow-alpha",
+      "--tw-drop-shadow-color",
+      "--tw-drop-shadow-size",
+      "--tw-duration",
+      "--tw-ease",
+      "--tw-font-weight",
+      "--tw-grayscale",
+      "--tw-hue-rotate",
+      "--tw-inset-ring-color",
+      "--tw-inset-ring-shadow",
+      "--tw-inset-shadow",
+      "--tw-inset-shadow-alpha",
+      "--tw-inset-shadow-color",
+      "--tw-invert",
+      "--tw-leading",
+      "--tw-numeric-figure",
+      "--tw-numeric-fraction",
+      "--tw-numeric-spacing",
+      "--tw-opacity",
+      "--tw-ordinal",
+      "--tw-outline-style",
+      "--tw-ring-color",
+      "--tw-ring-inset",
+      "--tw-ring-offset-color",
+      "--tw-ring-offset-shadow",
+      "--tw-ring-offset-width",
+      "--tw-ring-shadow",
+      "--tw-rotate-x",
+      "--tw-rotate-y",
+      "--tw-rotate-z",
+      "--tw-saturate",
+      "--tw-sepia",
+      "--tw-shadow",
+      "--tw-shadow-alpha",
+      "--tw-shadow-color",
+      "--tw-skew-x",
+      "--tw-skew-y",
+      "--tw-slashed-zero",
+      "--tw-space-y-reverse",
+      "--tw-tracking",
+      "--tw-translate-x",
+      "--tw-translate-y",
+      "--tw-translate-z",
+      "--warning",
+      "--warning-bg",
+      "--z-dropdown",
+      "--z-modal",
+      "--z-modal-backdrop",
+      "--z-sticky",
+      "--z-toast",
+      "--z-tooltip"
+    ],
+    "tokenKinds": {
+      "--rdp-accent-color": "color",
+      "--rdp-accent-background-color": "color",
+      "--rdp-day-height": "spacing",
+      "--rdp-day-width": "spacing",
+      "--rdp-day_button-border-radius": "radius",
+      "--rdp-day_button-border": "other",
+      "--rdp-day_button-height": "spacing",
+      "--rdp-day_button-width": "spacing",
+      "--rdp-selected-border": "color",
+      "--rdp-disabled-opacity": "other",
+      "--rdp-outside-opacity": "color",
+      "--rdp-today-color": "color",
+      "--rdp-dropdown-gap": "spacing",
+      "--rdp-months-gap": "spacing",
+      "--rdp-nav_button-disabled-opacity": "other",
+      "--rdp-nav_button-height": "spacing",
+      "--rdp-nav_button-width": "spacing",
+      "--rdp-nav-height": "spacing",
+      "--rdp-range_middle-background-color": "color",
+      "--rdp-range_middle-color": "color",
+      "--rdp-range_start-color": "color",
+      "--rdp-range_start-background": "color",
+      "--rdp-range_start-date-background-color": "color",
+      "--rdp-range_end-background": "color",
+      "--rdp-range_end-color": "color",
+      "--rdp-range_end-date-background-color": "color",
+      "--rdp-week_number-border-radius": "radius",
+      "--rdp-week_number-border": "other",
+      "--rdp-week_number-height": "color",
+      "--rdp-week_number-opacity": "other",
+      "--rdp-week_number-width": "color",
+      "--rdp-weeknumber-text-align": "font",
+      "--rdp-weekday-opacity": "other",
+      "--rdp-weekday-padding": "spacing",
+      "--rdp-weekday-text-align": "font",
+      "--rdp-gradient-direction": "other",
+      "--rdp-animation_duration": "other",
+      "--rdp-animation_timing": "other",
+      "--font-sans": "font",
+      "--color-white": "color",
+      "--spacing": "spacing",
+      "--container-xs": "spacing",
+      "--container-sm": "spacing",
+      "--container-md": "spacing",
+      "--container-lg": "spacing",
+      "--container-xl": "spacing",
+      "--container-3xl": "spacing",
+      "--container-4xl": "spacing",
+      "--text-xs": "font",
+      "--text-xs--line-height": "font",
+      "--text-sm": "font",
+      "--text-sm--line-height": "font",
+      "--text-base": "font",
+      "--text-base--line-height": "font",
+      "--text-lg": "font",
+      "--text-lg--line-height": "font",
+      "--text-xl": "font",
+      "--text-xl--line-height": "font",
+      "--text-2xl": "font",
+      "--text-2xl--line-height": "font",
+      "--font-weight-normal": "font",
+      "--font-weight-medium": "font",
+      "--font-weight-semibold": "font",
+      "--tracking-tight": "font",
+      "--tracking-wide": "font",
+      "--radius-md": "radius",
+      "--radius-lg": "radius",
+      "--radius-xl": "radius",
+      "--ease-in-out": "other",
+      "--animate-spin": "other",
+      "--animate-pulse": "other",
+      "--default-transition-duration": "other",
+      "--default-transition-timing-function": "other",
+      "--default-font-family": "font",
+      "--default-mono-font-family": "font",
+      "--color-surface": "color",
+      "--color-border": "color",
+      "--color-border-strong": "color",
+      "--color-ink-muted": "color",
+      "--color-accent": "color",
+      "--color-accent-weak": "color",
+      "--color-accent-strong": "color",
+      "--tw-translate-y": "other",
+      "--tw-border-style": "other",
+      "--tw-leading": "font",
+      "--tw-font-weight": "font",
+      "--tw-tracking": "font",
+      "--tw-numeric-spacing": "spacing",
+      "--tw-shadow": "shadow",
+      "--tw-ring-color": "color",
+      "--tw-duration": "color",
+      "--tw-ease": "color",
+      "--tw-outline-style": "other",
+      "--bg": "color",
+      "--surface": "color",
+      "--panel": "color",
+      "--border": "color",
+      "--border-strong": "color",
+      "--ink": "color",
+      "--ink-secondary": "color",
+      "--ink-muted": "color",
+      "--accent": "color",
+      "--accent-hover": "color",
+      "--accent-active": "color",
+      "--accent-weak": "color",
+      "--accent-strong": "color",
+      "--success": "color",
+      "--success-bg": "color",
+      "--warning": "color",
+      "--warning-bg": "color",
+      "--danger": "color",
+      "--danger-bg": "color",
+      "--info": "color",
+      "--info-bg": "color",
+      "--neutral": "color",
+      "--neutral-bg": "color",
+      "--ease-out-quart": "other",
+      "--dur-fast": "other",
+      "--dur": "other",
+      "--cal-day-size": "spacing",
+      "--cal-day-button-size": "spacing",
+      "--z-dropdown": "other",
+      "--z-sticky": "other",
+      "--z-modal-backdrop": "other",
+      "--z-modal": "other",
+      "--z-toast": "other",
+      "--z-tooltip": "other",
+      "--tw-translate-x": "other",
+      "--tw-translate-z": "other",
+      "--tw-rotate-x": "color",
+      "--tw-rotate-y": "color",
+      "--tw-rotate-z": "color",
+      "--tw-skew-x": "color",
+      "--tw-skew-y": "color",
+      "--tw-space-y-reverse": "spacing",
+      "--tw-divide-x-reverse": "other",
+      "--tw-divide-y-reverse": "other",
+      "--tw-ordinal": "color",
+      "--tw-slashed-zero": "color",
+      "--tw-numeric-figure": "color",
+      "--tw-numeric-fraction": "color",
+      "--tw-shadow-color": "shadow",
+      "--tw-shadow-alpha": "shadow",
+      "--tw-inset-shadow": "shadow",
+      "--tw-inset-shadow-color": "shadow",
+      "--tw-inset-shadow-alpha": "shadow",
+      "--tw-ring-shadow": "shadow",
+      "--tw-inset-ring-color": "color",
+      "--tw-inset-ring-shadow": "shadow",
+      "--tw-ring-inset": "spacing",
+      "--tw-ring-offset-width": "spacing",
+      "--tw-ring-offset-color": "color",
+      "--tw-ring-offset-shadow": "shadow",
+      "--tw-blur": "color",
+      "--tw-brightness": "color",
+      "--tw-contrast": "color",
+      "--tw-grayscale": "color",
+      "--tw-hue-rotate": "color",
+      "--tw-invert": "color",
+      "--tw-opacity": "color",
+      "--tw-saturate": "color",
+      "--tw-sepia": "color",
+      "--tw-drop-shadow": "shadow",
+      "--tw-drop-shadow-color": "shadow",
+      "--tw-drop-shadow-alpha": "shadow",
+      "--tw-drop-shadow-size": "shadow",
+      "--font-sohne": "font"
+    },
+    "fontFamilies": [
+      "Sohne"
+    ]
+  }
+}

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/atlas-5bf43f36-7c8c-48ca-a820-721319c240a2/fonts/fonts.css">
+<link rel="stylesheet" href="_ds/atlas-5bf43f36-7c8c-48ca-a820-721319c240a2/_ds_bundle.css">
+<link rel="stylesheet" href="_ds/atlas-5bf43f36-7c8c-48ca-a820-721319c240a2/styles.css">
+<script src="_ds/atlas-5bf43f36-7c8c-48ca-a820-721319c240a2/_ds_bundle.js"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: var(--accent-hover); }
+  a.btn-primary { color: #fff; }
+  a.btn-secondary { color: var(--ink); }
+  a.btn-ghost { color: var(--ink-secondary); }
+  * { box-sizing: border-box; }
+  .fsv-container { width: 100%; max-width: 1200px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+  .fsv-hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; }
+  .fsv-split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  .fsv-autofit { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+  .fsv-card { transition: transform var(--dur) var(--ease-out-quart), box-shadow var(--dur) var(--ease-out-quart), border-color var(--dur) var(--ease-out-quart); }
+  .fsv-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px -24px rgba(30,30,60,0.35); border-color: var(--border-strong); }
+  .fsv-menu-btn { display: none; }
+  @media (max-width: 900px) {
+    .fsv-hero-grid, .fsv-split { grid-template-columns: 1fr; gap: 36px; }
+    .fsv-nav-links, .fsv-nav-cta { display: none !important; }
+    .fsv-menu-btn { display: inline-flex; }
+    .fsv-hero-visual { order: -1; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      [data-reveal] { animation: fsvReveal linear both; animation-timeline: view(); animation-range: entry 0% entry 45%; }
+    }
+  }
+  @keyframes fsvReveal { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+  .fsv-faq summary { list-style: none; cursor: pointer; }
+  .fsv-faq summary::-webkit-details-marker { display: none; }
+  .fsv-faq[open] .fsv-faq-plus { transform: rotate(45deg); }
+</style>
+</helmet>
+<div style="font-family: var(--font-sans); background: var(--bg); color: var(--ink); min-height: 100vh;">
+
+  <!-- ============ NAV ============ -->
+  <header style="position: sticky; top: 0; z-index: 1100; background: color-mix(in oklab, var(--bg) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border);">
+    <div class="fsv-container" style="display: flex; align-items: center; justify-content: space-between; height: 68px;">
+      <a href="#home" style="display: flex; align-items: center; gap: 10px; color: var(--ink);">
+        <span style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 9px; background: var(--accent); color: #fff; font-weight: 700; font-size: 14px; letter-spacing: -0.02em;">4S</span>
+        <span style="font-weight: 600; font-size: 17px; letter-spacing: -0.01em;">4Starventure</span>
+      </a>
+      <nav class="fsv-nav-links" style="display: flex; align-items: center; gap: 30px;">
+        <a href="#services" style="color: var(--ink-secondary); font-size: 14.5px; font-weight: 500;">Services</a>
+        <a href="#payments" style="color: var(--ink-secondary); font-size: 14.5px; font-weight: 500;">Payments</a>
+        <a href="#fulfillment" style="color: var(--ink-secondary); font-size: 14.5px; font-weight: 500;">Fulfillment</a>
+        <a href="#why" style="color: var(--ink-secondary); font-size: 14.5px; font-weight: 500;">Why us</a>
+        <a href="#faq" style="color: var(--ink-secondary); font-size: 14.5px; font-weight: 500;">FAQ</a>
+      </nav>
+      <a href="#contact" class="btn btn-primary fsv-nav-cta">Talk to us</a>
+      <button class="btn btn-secondary fsv-menu-btn" aria-label="Open menu" onClick="{{ toggleNav }}" style="padding: 8px 10px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+    <sc-if value="{{ navOpen }}" hint-placeholder-val="{{ false }}">
+      <div style="border-top: 1px solid var(--border); background: var(--surface);">
+        <div class="fsv-container" style="display: flex; flex-direction: column; padding-top: 12px; padding-bottom: 16px; gap: 4px;">
+          <a href="#services" onClick="{{ closeNav }}" style="padding: 10px 4px; color: var(--ink-secondary); font-weight: 500;">Services</a>
+          <a href="#payments" onClick="{{ closeNav }}" style="padding: 10px 4px; color: var(--ink-secondary); font-weight: 500;">Payments</a>
+          <a href="#fulfillment" onClick="{{ closeNav }}" style="padding: 10px 4px; color: var(--ink-secondary); font-weight: 500;">Fulfillment</a>
+          <a href="#why" onClick="{{ closeNav }}" style="padding: 10px 4px; color: var(--ink-secondary); font-weight: 500;">Why us</a>
+          <a href="#faq" onClick="{{ closeNav }}" style="padding: 10px 4px; color: var(--ink-secondary); font-weight: 500;">FAQ</a>
+          <a href="#contact" onClick="{{ closeNav }}" class="btn btn-primary" style="margin-top: 8px;">Talk to us</a>
+        </div>
+      </div>
+    </sc-if>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section id="home" style="scroll-margin-top: 84px; position: relative; overflow: hidden;">
+    <div style="position: absolute; inset: 0; background: radial-gradient(900px 500px at 78% -8%, var(--accent-weak), transparent 60%); pointer-events: none;"></div>
+    <div class="fsv-container" style="position: relative; padding-top: 84px; padding-bottom: 88px;">
+      <div class="fsv-hero-grid">
+        <div>
+          <span style="display: inline-block; font-size: 12.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-strong); background: var(--accent-weak); padding: 6px 12px; border-radius: 999px;">Cross-border ecommerce infrastructure</span>
+          <h1 style="margin: 22px 0 0; font-size: 52px; line-height: 1.05; letter-spacing: -0.03em; font-weight: 600; text-wrap: balance;">Sell across borders on a store that's built to get paid.</h1>
+          <p style="margin: 22px 0 0; font-size: 18px; line-height: 1.6; color: var(--ink-secondary); max-width: 34em;">Rented Shopify, OnePage and WooCommerce stores with stable payment gateways and fulfillment to 40+ countries.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px;">
+            <a href="#contact" class="btn btn-primary" style="padding: 12px 22px; font-size: 15px;">Talk to us</a>
+            <a href="#services" class="btn btn-secondary" style="padding: 12px 22px; font-size: 15px;">See our services</a>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 26px; margin-top: 36px;">
+            <div style="display: flex; align-items: center; gap: 9px; color: var(--ink-secondary); font-size: 14px;"><span style="width: 8px; height: 8px; border-radius: 999px; background: var(--success);"></span>Store live in ~48 hours</div>
+            <div style="display: flex; align-items: center; gap: 9px; color: var(--ink-secondary); font-size: 14px;"><span style="width: 8px; height: 8px; border-radius: 999px; background: var(--success);"></span>Visa, Mastercard, Amex, Apple &amp; Google Pay</div>
+          </div>
+        </div>
+        <div class="fsv-hero-visual" style="position: relative;">
+          <div style="position: relative; border-radius: 18px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 30px 70px -40px rgba(40,40,80,0.5);">
+            <div style="position: absolute; inset: 0; background: linear-gradient(180deg, color-mix(in oklab, var(--accent) 14%, transparent), transparent 45%); mix-blend-mode: multiply; pointer-events: none;"></div>
+            <img src="https://picsum.photos/seed/4sv-commerce-desk/1100/1000" alt="Online store owner managing cross-border orders" width="1100" height="1000" style="display: block; width: 100%; height: 520px; object-fit: cover; filter: grayscale(0.12) contrast(1.02);" loading="eager">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TRUST STRIP ============ -->
+  <sc-if value="{{ showTrust }}" hint-placeholder-val="{{ true }}">
+  <section style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--surface);">
+    <div class="fsv-container" style="padding-top: 30px; padding-bottom: 30px;">
+      <p style="text-align: center; font-size: 13px; letter-spacing: 0.04em; color: var(--ink-muted); margin: 0 0 22px;">Platforms and payment rails we build on</p>
+      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 44px;">
+        <img src="https://cdn.simpleicons.org/shopify/95a3b8" alt="Shopify" height="26" style="height: 26px; opacity: 0.9;">
+        <img src="https://cdn.simpleicons.org/woocommerce/95a3b8" alt="WooCommerce" height="26" style="height: 26px; opacity: 0.9;">
+        <span style="font-weight: 700; font-size: 19px; color: #95a3b8; letter-spacing: -0.01em;">OnePage</span>
+        <img src="https://cdn.simpleicons.org/paypal/95a3b8" alt="PayPal" height="26" style="height: 26px; opacity: 0.9;">
+        <img src="https://cdn.simpleicons.org/visa/95a3b8" alt="Visa" height="24" style="height: 24px; opacity: 0.9;">
+        <img src="https://cdn.simpleicons.org/mastercard/95a3b8" alt="Mastercard" height="30" style="height: 30px; opacity: 0.9;">
+        <span style="font-weight: 700; font-size: 19px; color: #95a3b8; letter-spacing: -0.01em;">Airwallex</span>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ============ SERVICES ============ -->
+  <section id="services" style="scroll-margin-top: 84px;">
+    <div class="fsv-container" style="padding-top: 92px; padding-bottom: 44px;">
+      <div data-reveal style="max-width: 40em;">
+        <span style="font-size: 12.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-strong);">What we set up for you</span>
+        <h2 style="margin: 14px 0 0; font-size: 38px; line-height: 1.1; letter-spacing: -0.025em; font-weight: 600;">Three ways to have a store, without building one yourself.</h2>
+        <p style="margin: 16px 0 0; font-size: 17px; line-height: 1.6; color: var(--ink-secondary);">We configure, host and hand over a ready-to-sell storefront on the platform that fits your product and your market. You focus on marketing; we keep the store standing.</p>
+      </div>
+    </div>
+    <div class="fsv-container" style="padding-bottom: 92px;">
+      <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px;" class="fsv-split">
+        <!-- Shopify featured -->
+        <div data-reveal class="fsv-card" style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 34px; display: flex; flex-direction: column; gap: 18px;">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <img src="https://cdn.simpleicons.org/shopify/5a8f3d" alt="Shopify" height="30" style="height: 30px;">
+            <span style="font-size: 12px; font-weight: 600; color: var(--accent-strong); background: var(--accent-weak); padding: 5px 11px; border-radius: 999px;">Most popular</span>
+          </div>
+          <div>
+            <h3 style="margin: 0; font-size: 23px; font-weight: 600; letter-spacing: -0.01em;">Shopify store rental</h3>
+            <p style="margin: 10px 0 0; font-size: 15.5px; line-height: 1.6; color: var(--ink-secondary);">A fully configured Shopify storefront on our infrastructure, with themes, apps and checkout tuned for Western buyers.</p>
+          </div>
+          <ul style="list-style: none; padding: 0; margin: 6px 0 0; display: grid; gap: 12px;">
+            <li style="display: flex; gap: 10px; font-size: 15px; color: var(--ink); line-height: 1.5;"><span style="color: var(--success); flex: none;">✓</span>Theme, product pages and checkout set up for you</li>
+            <li style="display: flex; gap: 10px; font-size: 15px; color: var(--ink); line-height: 1.5;"><span style="color: var(--success); flex: none;">✓</span>Shopify Payment, PayPal or Airwallex connected</li>
+            <li style="display: flex; gap: 10px; font-size: 15px; color: var(--ink); line-height: 1.5;"><span style="color: var(--success); flex: none;">✓</span>Backup store ready if a gateway is restricted</li>
+          </ul>
+        </div>
+        <!-- OnePage + Woo stacked -->
+        <div style="display: grid; grid-template-rows: 1fr 1fr; gap: 20px;">
+          <div data-reveal class="fsv-card" style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 12px;">
+            <span style="font-weight: 700; font-size: 20px; color: var(--ink); letter-spacing: -0.01em;">OnePage</span>
+            <h3 style="margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -0.01em;">OnePage landers</h3>
+            <p style="margin: 0; font-size: 15px; line-height: 1.55; color: var(--ink-secondary);">High-converting single-product pages for fast paid-traffic campaigns, with checkout wired to a stable gateway.</p>
+          </div>
+          <div data-reveal class="fsv-card" style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 12px;">
+            <img src="https://cdn.simpleicons.org/woocommerce/7f54b3" alt="WooCommerce" height="26" style="height: 26px;">
+            <h3 style="margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -0.01em;">WooCommerce stores</h3>
+            <p style="margin: 0; font-size: 15px; line-height: 1.55; color: var(--ink-secondary);">Self-owned WordPress stores when you want full control of data, plugins and hosting.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PAYMENTS ============ -->
+  <section id="payments" style="scroll-margin-top: 84px; background: var(--panel); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="fsv-container" style="padding-top: 92px; padding-bottom: 92px;">
+      <div data-reveal style="max-width: 42em; margin-bottom: 44px;">
+        <h2 style="margin: 0; font-size: 38px; line-height: 1.1; letter-spacing: -0.025em; font-weight: 600;">Payment gateways that actually stay open.</h2>
+        <p style="margin: 16px 0 0; font-size: 17px; line-height: 1.6; color: var(--ink-secondary);">The hardest part of cross-border selling is getting paid. We set you up on proven gateways and keep a backup ready, so a single review never stops your cash flow.</p>
+      </div>
+      <div class="fsv-autofit" data-reveal>
+        <div class="fsv-card" style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px;">
+          <img src="https://cdn.simpleicons.org/paypal/003087" alt="PayPal" height="30" style="height: 30px;">
+          <h3 style="margin: 18px 0 8px; font-size: 19px; font-weight: 600;">PayPal</h3>
+          <p style="margin: 0; font-size: 15px; line-height: 1.55; color: var(--ink-secondary);">Buyer-trusted checkout for US and EU shoppers, with account setup guidance to reduce holds.</p>
+        </div>
+        <div class="fsv-card" style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px;">
+          <img src="https://cdn.simpleicons.org/shopify/95bf47" alt="Shopify" height="30" style="height: 30px;">
+          <h3 style="margin: 18px 0 8px; font-size: 19px; font-weight: 600;">Shopify Payments</h3>
+          <p style="margin: 0; font-size: 15px; line-height: 1.55; color: var(--ink-secondary);">Native card processing inside Shopify, the smoothest checkout when your store qualifies.</p>
+        </div>
+        <div class="fsv-card" style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px;">
+          <span style="font-weight: 700; font-size: 22px; color: var(--ink); letter-spacing: -0.01em;">Airwallex</span>
+          <h3 style="margin: 18px 0 8px; font-size: 19px; font-weight: 600;">Airwallex</h3>
+          <p style="margin: 0; font-size: 15px; line-height: 1.55; color: var(--ink-secondary);">Global card acquiring with multi-currency collection, ideal when you sell into several markets at once.</p>
+        </div>
+      </div>
+      <div style="margin-top: 32px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 26px 28px;">
+        <p style="margin: 0 0 18px; font-size: 13.5px; letter-spacing: 0.03em; color: var(--ink-muted);">Cards and wallets your customers can pay with</p>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 34px;">
+          <img src="https://cdn.simpleicons.org/visa/1434CB" alt="Visa" height="26" style="height: 26px;">
+          <img src="https://cdn.simpleicons.org/mastercard" alt="Mastercard" height="34" style="height: 34px;">
+          <img src="https://cdn.simpleicons.org/americanexpress/2E77BC" alt="American Express" height="30" style="height: 30px;">
+          <img src="https://cdn.simpleicons.org/discover/FF6000" alt="Discover" height="26" style="height: 26px;">
+          <img src="https://cdn.simpleicons.org/applepay/000000" alt="Apple Pay" height="28" style="height: 28px;">
+          <img src="https://cdn.simpleicons.org/googlepay/5F6368" alt="Google Pay" height="26" style="height: 26px;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FULFILLMENT ============ -->
+  <section id="fulfillment" style="scroll-margin-top: 84px;">
+    <div class="fsv-container" style="padding-top: 92px; padding-bottom: 92px;">
+      <div class="fsv-split">
+        <div data-reveal style="position: relative; border-radius: 18px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 30px 70px -46px rgba(40,40,80,0.5);">
+          <div style="position: absolute; inset: 0; background: linear-gradient(200deg, color-mix(in oklab, var(--accent) 16%, transparent), transparent 50%); mix-blend-mode: multiply;"></div>
+          <img src="https://picsum.photos/seed/4sv-fulfillment-warehouse/1000/860" alt="Warehouse fulfillment and international shipping" width="1000" height="860" style="display: block; width: 100%; height: 480px; object-fit: cover; filter: grayscale(0.12);" loading="lazy">
+        </div>
+        <div data-reveal>
+          <h2 style="margin: 0; font-size: 38px; line-height: 1.1; letter-spacing: -0.025em; font-weight: 600;">Orders shipped worldwide, tracked end to end.</h2>
+          <p style="margin: 16px 0 0; font-size: 17px; line-height: 1.6; color: var(--ink-secondary);">We handle sourcing, packing and delivery to your customers across North America, Europe and beyond, with tracking numbers pushed back to the store automatically.</p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 30px;">
+            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px;">
+              <h3 style="margin: 0; font-size: 15px; font-weight: 600;">Global coverage</h3>
+              <p style="margin: 6px 0 0; font-size: 14px; line-height: 1.5; color: var(--ink-secondary);">Delivery to 40+ destination countries.</p>
+            </div>
+            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px;">
+              <h3 style="margin: 0; font-size: 15px; font-weight: 600;">Auto tracking sync</h3>
+              <p style="margin: 6px 0 0; font-size: 14px; line-height: 1.5; color: var(--ink-secondary);">Tracking pushed to Shopify, Woo and OnePage.</p>
+            </div>
+            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px;">
+              <h3 style="margin: 0; font-size: 15px; font-weight: 600;">Product sourcing</h3>
+              <p style="margin: 6px 0 0; font-size: 14px; line-height: 1.5; color: var(--ink-secondary);">We help you source and stock winning SKUs.</p>
+            </div>
+            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px;">
+              <h3 style="margin: 0; font-size: 15px; font-weight: 600;">Fewer chargebacks</h3>
+              <p style="margin: 6px 0 0; font-size: 14px; line-height: 1.5; color: var(--ink-secondary);">Reliable delivery keeps disputes and holds low.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STATS ============ -->
+  <sc-if value="{{ showStats }}" hint-placeholder-val="{{ true }}">
+  <section style="background: var(--ink);">
+    <div class="fsv-container" style="padding-top: 60px; padding-bottom: 60px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; background: color-mix(in oklab, #ffffff 14%, transparent); border-radius: 16px; overflow: hidden;">
+        <div style="background: var(--ink); padding: 30px 26px;">
+          <div style="font-size: 40px; font-weight: 600; letter-spacing: -0.03em; color: #fff;">~48h</div>
+          <div style="margin-top: 6px; font-size: 14px; color: color-mix(in oklab, #fff 70%, transparent);">Average store setup time</div>
+        </div>
+        <div style="background: var(--ink); padding: 30px 26px;">
+          <div style="font-size: 40px; font-weight: 600; letter-spacing: -0.03em; color: #fff;">40+</div>
+          <div style="margin-top: 6px; font-size: 14px; color: color-mix(in oklab, #fff 70%, transparent);">Fulfillment destinations</div>
+        </div>
+        <div style="background: var(--ink); padding: 30px 26px;">
+          <div style="font-size: 40px; font-weight: 600; letter-spacing: -0.03em; color: #fff;">3</div>
+          <div style="margin-top: 6px; font-size: 14px; color: color-mix(in oklab, #fff 70%, transparent);">Store platforms supported</div>
+        </div>
+        <div style="background: var(--ink); padding: 30px 26px;">
+          <div style="font-size: 40px; font-weight: 600; letter-spacing: -0.03em; color: #fff;">6</div>
+          <div style="margin-top: 6px; font-size: 14px; color: color-mix(in oklab, #fff 70%, transparent);">Card &amp; wallet methods</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ============ WHY US ============ -->
+  <section id="why" style="scroll-margin-top: 84px;">
+    <div class="fsv-container" style="padding-top: 92px; padding-bottom: 92px;">
+      <div data-reveal style="max-width: 40em; margin-bottom: 44px;">
+        <h2 style="margin: 0; font-size: 38px; line-height: 1.1; letter-spacing: -0.025em; font-weight: 600;">Built for sellers who just want to sell.</h2>
+        <p style="margin: 16px 0 0; font-size: 17px; line-height: 1.6; color: var(--ink-secondary);">Whether you are launching your first store or scaling dozens, we remove the operational blockers between your product and a paying customer.</p>
+      </div>
+      <div class="fsv-autofit" data-reveal>
+        <div style="border-top: 2px solid var(--accent); padding-top: 22px;">
+          <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Done-for-you setup</h3>
+          <p style="margin: 10px 0 0; font-size: 15px; line-height: 1.6; color: var(--ink-secondary);">New to ecommerce? You get a working store without touching a theme editor or a payment dashboard.</p>
+        </div>
+        <div style="border-top: 2px solid var(--accent); padding-top: 22px;">
+          <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Gateway resilience</h3>
+          <p style="margin: 10px 0 0; font-size: 15px; line-height: 1.6; color: var(--ink-secondary);">Been locked out before? We keep backups and proven account practices so payments keep flowing.</p>
+        </div>
+        <div style="border-top: 2px solid var(--accent); padding-top: 22px;">
+          <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Western-ready checkout</h3>
+          <p style="margin: 10px 0 0; font-size: 15px; line-height: 1.6; color: var(--ink-secondary);">Selling into the US and EU? Localized checkout, currencies and cards your buyers already trust.</p>
+        </div>
+        <div style="border-top: 2px solid var(--accent); padding-top: 22px;">
+          <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Made to scale</h3>
+          <p style="margin: 10px 0 0; font-size: 15px; line-height: 1.6; color: var(--ink-secondary);">Running an agency? Spin up and manage many stores with consistent setup and one point of contact.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <sc-if value="{{ showTestimonials }}" hint-placeholder-val="{{ true }}">
+  <section style="background: var(--panel); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="fsv-container" style="padding-top: 92px; padding-bottom: 92px;">
+      <h2 data-reveal style="margin: 0 0 44px; font-size: 34px; line-height: 1.12; letter-spacing: -0.025em; font-weight: 600; max-width: 20em;">Sellers who stopped worrying about the backend.</h2>
+      <div class="fsv-autofit" data-reveal>
+        <figure style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin: 0; display: flex; flex-direction: column; gap: 18px;">
+          <blockquote style="margin: 0; font-size: 16px; line-height: 1.6; color: var(--ink);">"They had my Shopify store live and taking Airwallex payments in two days. I finally just run ads instead of fighting the checkout."</blockquote>
+          <figcaption style="display: flex; align-items: center; gap: 12px;">
+            <img src="https://picsum.photos/seed/4sv-person-ngocanh/80/80" alt="" width="44" height="44" style="width: 44px; height: 44px; border-radius: 999px; object-fit: cover;" loading="lazy">
+            <div><div style="font-size: 14.5px; font-weight: 600;">Ngọc Anh Trần</div><div style="font-size: 13px; color: var(--ink-muted);">DTC seller, US market</div></div>
+          </figcaption>
+        </figure>
+        <figure style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin: 0; display: flex; flex-direction: column; gap: 18px;">
+          <blockquote style="margin: 0; font-size: 16px; line-height: 1.6; color: var(--ink);">"After PayPal froze my old account, their backup gateway kept sales running the same week. That saved my Q4."</blockquote>
+          <figcaption style="display: flex; align-items: center; gap: 12px;">
+            <img src="https://picsum.photos/seed/4sv-person-minhduc/80/80" alt="" width="44" height="44" style="width: 44px; height: 44px; border-radius: 999px; object-fit: cover;" loading="lazy">
+            <div><div style="font-size: 14.5px; font-weight: 600;">Minh Đức Phạm</div><div style="font-size: 13px; color: var(--ink-muted);">Founder, homeware brand</div></div>
+          </figcaption>
+        </figure>
+        <figure style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin: 0; display: flex; flex-direction: column; gap: 18px;">
+          <blockquote style="margin: 0; font-size: 16px; line-height: 1.6; color: var(--ink);">"We manage 18 client stores through them. Same setup every time, and fulfillment tracking just shows up in each store."</blockquote>
+          <figcaption style="display: flex; align-items: center; gap: 12px;">
+            <img src="https://picsum.photos/seed/4sv-person-julia/80/80" alt="" width="44" height="44" style="width: 44px; height: 44px; border-radius: 999px; object-fit: cover;" loading="lazy">
+            <div><div style="font-size: 14.5px; font-weight: 600;">Julia Novak</div><div style="font-size: 13px; color: var(--ink-muted);">Lead, dropshipping agency</div></div>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ============ FAQ ============ -->
+  <section id="faq" style="scroll-margin-top: 84px;">
+    <div class="fsv-container" style="padding-top: 92px; padding-bottom: 92px; max-width: 820px;">
+      <h2 data-reveal style="margin: 0 0 36px; font-size: 34px; line-height: 1.12; letter-spacing: -0.025em; font-weight: 600;">Frequently asked questions</h2>
+      <div data-reveal style="border-top: 1px solid var(--border);">
+        <details class="fsv-faq" style="border-bottom: 1px solid var(--border);">
+          <summary style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 4px; font-size: 17px; font-weight: 500;">How fast can my store go live?<span class="fsv-faq-plus" style="flex: none; color: var(--accent); font-size: 22px; transition: transform var(--dur) var(--ease-out-quart);">+</span></summary>
+          <p style="margin: 0; padding: 0 4px 24px; font-size: 15.5px; line-height: 1.6; color: var(--ink-secondary);">Most Shopify and OnePage stores are ready within about 48 hours once we have your product details and branding. WooCommerce setups depend on hosting and plugins but usually launch within a few days.</p>
+        </details>
+        <details class="fsv-faq" style="border-bottom: 1px solid var(--border);">
+          <summary style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 4px; font-size: 17px; font-weight: 500;">Do I own the store and the revenue?<span class="fsv-faq-plus" style="flex: none; color: var(--accent); font-size: 22px; transition: transform var(--dur) var(--ease-out-quart);">+</span></summary>
+          <p style="margin: 0; padding: 0 4px 24px; font-size: 15.5px; line-height: 1.6; color: var(--ink-secondary);">Yes. Payouts land in your connected accounts. For rented stores we manage the infrastructure and payment setup; you keep control of your products, customers and earnings.</p>
+        </details>
+        <details class="fsv-faq" style="border-bottom: 1px solid var(--border);">
+          <summary style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 4px; font-size: 17px; font-weight: 500;">What happens if a payment gateway gets restricted?<span class="fsv-faq-plus" style="flex: none; color: var(--accent); font-size: 22px; transition: transform var(--dur) var(--ease-out-quart);">+</span></summary>
+          <p style="margin: 0; padding: 0 4px 24px; font-size: 15.5px; line-height: 1.6; color: var(--ink-secondary);">We prepare backup gateways and store copies in advance, so if one account is put under review we can switch you over quickly and keep sales running.</p>
+        </details>
+        <details class="fsv-faq" style="border-bottom: 1px solid var(--border);">
+          <summary style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 4px; font-size: 17px; font-weight: 500;">Which countries can you fulfill orders to?<span class="fsv-faq-plus" style="flex: none; color: var(--accent); font-size: 22px; transition: transform var(--dur) var(--ease-out-quart);">+</span></summary>
+          <p style="margin: 0; padding: 0 4px 24px; font-size: 15.5px; line-height: 1.6; color: var(--ink-secondary);">We ship to 40+ countries with a focus on North America and Europe. Tracking numbers are synced back to your store automatically for every order.</p>
+        </details>
+        <details class="fsv-faq" style="border-bottom: 1px solid var(--border);">
+          <summary style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 4px; font-size: 17px; font-weight: 500;">I'm brand new to ecommerce. Can you still help?<span class="fsv-faq-plus" style="flex: none; color: var(--accent); font-size: 22px; transition: transform var(--dur) var(--ease-out-quart);">+</span></summary>
+          <p style="margin: 0; padding: 0 4px 24px; font-size: 15.5px; line-height: 1.6; color: var(--ink-secondary);">Absolutely. We handle the store, gateway and fulfillment setup end to end, then walk you through running it. You can start selling without any technical background.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" style="scroll-margin-top: 84px; background: var(--panel); border-top: 1px solid var(--border);">
+    <div class="fsv-container" style="padding-top: 92px; padding-bottom: 92px;">
+      <div class="fsv-split" style="align-items: start;">
+        <div data-reveal>
+          <span style="font-size: 12.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-strong);">Get started</span>
+          <h2 style="margin: 14px 0 0; font-size: 38px; line-height: 1.1; letter-spacing: -0.025em; font-weight: 600;">Tell us what you sell. We'll build the rest.</h2>
+          <p style="margin: 16px 0 0; font-size: 17px; line-height: 1.6; color: var(--ink-secondary);">Send a message and our team will map out the right store, gateway and fulfillment setup for your market, usually within one business day.</p>
+          <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 32px;">
+            <a href="https://zalo.me/4starventure" style="display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; color: var(--ink);">
+              <span style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px; background: var(--accent-weak); color: var(--accent-strong); font-weight: 700; font-size: 13px;">Zalo</span>
+              <span><span style="display: block; font-weight: 600; font-size: 15px;">Zalo</span><span style="display: block; font-size: 13.5px; color: var(--ink-muted);">+84 000 000 000</span></span>
+            </a>
+            <a href="https://t.me/4starventure" style="display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; color: var(--ink);">
+              <img src="https://cdn.simpleicons.org/telegram/229ED9" alt="" height="22" style="width: 40px; height: 40px; border-radius: 10px; background: var(--accent-weak); padding: 9px;">
+              <span><span style="display: block; font-weight: 600; font-size: 15px;">Telegram</span><span style="display: block; font-size: 13.5px; color: var(--ink-muted);">@4starventure</span></span>
+            </a>
+            <a href="mailto:hello@4starventure.com" style="display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; color: var(--ink);">
+              <span style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px; background: var(--accent-weak); color: var(--accent-strong);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg></span>
+              <span><span style="display: block; font-weight: 600; font-size: 15px;">Email</span><span style="display: block; font-size: 13.5px; color: var(--ink-muted);">hello@4starventure.com</span></span>
+            </a>
+          </div>
+        </div>
+        <div data-reveal style="background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 32px;">
+          <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; flex-direction: column; align-items: center; text-align: center; padding: 40px 12px; gap: 14px;">
+              <span style="display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 999px; background: var(--success-bg); color: var(--success);"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span>
+              <h3 style="margin: 0; font-size: 21px; font-weight: 600;">Thanks, we've got it.</h3>
+              <p style="margin: 0; font-size: 15px; line-height: 1.6; color: var(--ink-secondary); max-width: 26em;">Our team will reach out within one business day. For anything urgent, message us on Zalo or Telegram.</p>
+            </div>
+          </sc-if>
+          <sc-if value="{{ showForm }}" hint-placeholder-val="{{ true }}">
+          <form onSubmit="{{ onSubmit }}" style="display: flex; flex-direction: column; gap: 18px;">
+            <div><label class="field-label" for="fsv-name">Your name</label><input class="input" id="fsv-name" name="name" required placeholder="Nguyen Van A"></div>
+            <div><label class="field-label" for="fsv-email">Email</label><input class="input" id="fsv-email" name="email" type="email" required placeholder="you@example.com"></div>
+            <div><label class="field-label" for="fsv-platform">What do you need?</label>
+              <select class="select" id="fsv-platform" name="platform">
+                <option>Shopify store rental</option>
+                <option>OnePage lander</option>
+                <option>WooCommerce store</option>
+                <option>Payment gateway setup</option>
+                <option>Fulfillment only</option>
+                <option>Not sure yet, advise me</option>
+              </select>
+            </div>
+            <div><label class="field-label" for="fsv-msg">Tell us about your product and market</label><textarea class="input" id="fsv-msg" name="message" rows="4" style="resize: vertical;" placeholder="e.g. Home decor, selling to the US and Germany"></textarea></div>
+            <button type="submit" class="btn btn-primary" style="padding: 12px; font-size: 15px;">Send message</button>
+            <p style="margin: 0; font-size: 12.5px; color: var(--ink-muted); text-align: center;">We reply within one business day. No spam, ever.</p>
+          </form>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="background: var(--ink); color: color-mix(in oklab, #fff 78%, transparent);">
+    <div class="fsv-container" style="padding-top: 54px; padding-bottom: 40px;">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 32px;">
+        <div style="max-width: 24em;">
+          <div style="display: flex; align-items: center; gap: 10px; color: #fff;">
+            <span style="display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 9px; background: var(--accent); color: #fff; font-weight: 700; font-size: 13px;">4S</span>
+            <span style="font-weight: 600; font-size: 16px;">4Starventure</span>
+          </div>
+          <p style="margin: 16px 0 0; font-size: 14px; line-height: 1.6;">Cross-border ecommerce stores, payment gateways and worldwide fulfillment for sellers reaching Western markets.</p>
+        </div>
+        <div style="display: flex; gap: 64px; flex-wrap: wrap;">
+          <div>
+            <div style="font-size: 12.5px; letter-spacing: 0.05em; text-transform: uppercase; color: color-mix(in oklab, #fff 55%, transparent); margin-bottom: 14px;">Services</div>
+            <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px;">
+              <a href="#services" style="color: color-mix(in oklab, #fff 78%, transparent);">Store rental</a>
+              <a href="#payments" style="color: color-mix(in oklab, #fff 78%, transparent);">Payment gateways</a>
+              <a href="#fulfillment" style="color: color-mix(in oklab, #fff 78%, transparent);">Fulfillment</a>
+            </div>
+          </div>
+          <div>
+            <div style="font-size: 12.5px; letter-spacing: 0.05em; text-transform: uppercase; color: color-mix(in oklab, #fff 55%, transparent); margin-bottom: 14px;">Contact</div>
+            <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px;">
+              <a href="https://t.me/4starventure" style="color: color-mix(in oklab, #fff 78%, transparent);">Telegram</a>
+              <a href="https://zalo.me/4starventure" style="color: color-mix(in oklab, #fff 78%, transparent);">Zalo</a>
+              <a href="mailto:hello@4starventure.com" style="color: color-mix(in oklab, #fff 78%, transparent);">hello@4starventure.com</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top: 44px; padding-top: 22px; border-top: 1px solid color-mix(in oklab, #fff 14%, transparent); font-size: 13px; color: color-mix(in oklab, #fff 55%, transparent);">© 2026 4Starventure. All rights reserved.</div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200},&quot;showTrustStrip&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;},&quot;showStats&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;},&quot;showTestimonials&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;}}">
+class Component extends DCLogic {
+  state = { navOpen: false, submitted: false };
+  renderVals() {
+    const p = this.props;
+    return {
+      showTrust: p.showTrustStrip ?? true,
+      showStats: p.showStats ?? true,
+      showTestimonials: p.showTestimonials ?? true,
+      navOpen: this.state.navOpen,
+      submitted: this.state.submitted,
+      showForm: !this.state.submitted,
+      toggleNav: () => this.setState(s => ({ navOpen: !s.navOpen })),
+      closeNav: () => this.setState({ navOpen: false }),
+      onSubmit: (e) => { e.preventDefault(); this.setState({ submitted: true }); },
+    };
+  }
+}
+</script>
+</body>
+</html>
