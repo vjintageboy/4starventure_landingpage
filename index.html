@@ -1,10 +1,1118 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="utf-8">
-<title>4Starventure</title>
-<meta http-equiv="refresh" content="0; url=./4Starventure%20Website.dc.html">
-<link rel="canonical" href="./4Starventure%20Website.dc.html">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>document.documentElement.classList.add('fsv-js');</script>
+<script src="./support.js"></script>
 </head>
-<body><a href="./4Starventure%20Website.dc.html">4Starventure</a></body>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/nocturne-3ed6da00-8463-48a8-be51-bb18e4dd1c03/styles.css">
+<script src="_ds/nocturne-3ed6da00-8463-48a8-be51-bb18e4dd1c03/_ds_bundle.js"></script>
+<script src="image-slot.js"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  *, *::before, *::after { box-sizing: border-box; }
+  .fsv-wrap { font-family: var(--font-body); background: var(--color-bg); color: var(--color-text); overflow-x: clip; }
+  .fsv-container { width: 100%; max-width: 1180px; margin: 0 auto; padding-left: 28px; padding-right: 28px; }
+  .fsv-hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 64px; align-items: center; }
+  .fsv-split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .fsv-autofit { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+  .fsv-menu-btn { display: none; }
+  @media (max-width: 900px) {
+    /* !important is required here: layout columns are set inline in the markup */
+    .fsv-hero-grid, .fsv-split { grid-template-columns: 1fr !important; gap: 40px !important; }
+    .fsv-why-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+    .fsv-why-grid > div:first-child { position: static !important; }
+    .fsv-trust-grid { grid-template-columns: 1fr !important; }
+    .fsv-mile-wrap { grid-template-columns: 1fr !important; gap: 32px !important; }
+    .fsv-pyr-tile { width: clamp(72px, 20vw, 108px); }
+    .fsv-pyr-tile.apex { width: clamp(84px, 23vw, 124px); }
+    .fsv-fulfil-head { grid-template-columns: 1fr !important; gap: 18px !important; }
+    .fsv-nav-links, .fsv-nav-cta { display: none !important; }
+    .fsv-menu-btn { display: inline-flex; }
+    /* on phones the headline leads and the dashboard visual follows */
+    .fsv-hero-visual { order: 2; }
+  }
+  @media (max-width: 600px) {
+    .fsv-container { padding-left: 20px; padding-right: 20px; }
+    section > .fsv-container { padding-top: 64px !important; padding-bottom: 64px !important; }
+    #home > .fsv-container { padding-top: 56px !important; }
+    #home h1 { font-size: clamp(30px, 9.2vw, 40px); }
+    .fsv-pyr-row { gap: 8px; }
+    .fsv-pyr-tile { width: clamp(58px, 18.5vw, 88px); }
+    .fsv-pyr-tile.apex { width: clamp(68px, 21vw, 100px); }
+    .fsv-trow { gap: 14px; }
+    .fsv-tcard { width: min(340px, 82vw); }
+    .fsv-wallet-row { gap: 20px !important; }
+    .fsv-wallet { height: 54px; }
+    .fsv-map-note { position: static !important; margin-top: 12px; }
+    footer .fsv-container { padding-top: 56px !important; }
+    .fsv-foot-cols { gap: 32px !important; }
+    /* keep live-order bubbles inside the card edges (nth-of-type = DOM order) */
+    .fsv-order-bub:nth-of-type(5), .fsv-order-bub:nth-of-type(6) { display: none; }
+    .fsv-order-bub:nth-of-type(3) { right: 4% !important; }
+    .fsv-order-bub:nth-of-type(4) { right: 28% !important; }
+    .fsv-order-bub:nth-of-type(7) { left: 4% !important; bottom: -4% !important; }
+    .fsv-order-bub:nth-of-type(8) { right: 3% !important; bottom: -4% !important; }
+  }
+  /* touch hygiene */
+  @media (pointer: coarse) {
+    .input { font-size: 16px !important; } /* 16px+ prevents iOS Safari focus zoom */
+  }
+  @media (hover: none) {
+    .fsv-card:hover { transform: none; }
+    .fsv-why-card:hover { transform: none; }
+    .fsv-glass-cta:hover { transform: none; }
+    .fsv-mile-card:hover img { transform: none; filter: saturate(0.82) brightness(0.9); }
+    .fsv-tmarquee:hover .fsv-trow { animation-play-state: running; }
+    .fsv-marquee-mask:hover .fsv-marquee { animation-play-state: running; }
+    .fsv-hero-visual:hover .fsv-deck { transform: perspective(1400px) rotateY(-9deg) rotateX(3deg); }
+  }
+  /* kinetic entrance */
+  .fsv-rise { display: inline-block; opacity: 0; transform: translateY(22px); animation: fsvRise 0.8s cubic-bezier(0.16,1,0.3,1) forwards; }
+  @keyframes fsvRise { to { opacity: 1; transform: none; } }
+  .fsv-fade { opacity: 0; animation: fsvFade 0.9s ease forwards; }
+  @keyframes fsvFade { to { opacity: 1; } }
+  /* scroll reveal — powered by Motion inView() (https://motion.dev/docs/inview).
+     Only elements the reveal script has bound (.fsv-wait) are hidden, so content
+     can never get stuck invisible if scripts fail or the dc runtime re-renders. */
+  html.fsv-js [data-reveal].fsv-wait { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); will-change: opacity, transform; }
+  html.fsv-js [data-reveal].fsv-in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    html.fsv-js [data-reveal].fsv-wait { opacity: 1; transform: none; transition: none; }
+  }
+  /* glow pulse */
+  .fsv-glow { animation: fsvGlow 7s ease-in-out infinite; }
+  @keyframes fsvGlow { 0%,100% { opacity: 0.55; } 50% { opacity: 1; } }
+  /* marquee */
+  .fsv-marquee { display: flex; width: max-content; animation: fsvMarquee 34s linear infinite; }
+  @keyframes fsvMarquee { to { transform: translateX(-50%); } }
+  /* pause the logo strip while the cursor is over it */
+  .fsv-marquee-mask:hover .fsv-marquee { animation-play-state: paused; }
+  .fsv-logo { display: inline-flex; align-items: center; justify-content: center; height: 76px; flex: none; margin-right: 60px; }
+  .fsv-logo img { display: block; width: auto; }
+  .fsv-logo .fsv-word { font-size: 17px; font-weight: 600; letter-spacing: 0.01em; line-height: 1; white-space: nowrap; }
+  .fsv-wallet { display: inline-flex; align-items: center; justify-content: center; height: 66px; }
+  .fsv-wallet img { display: block; width: auto; }
+  /* card hover */
+  .fsv-card { transition: transform var(--dur, 220ms) cubic-bezier(0.16,1,0.3,1), box-shadow 220ms ease, border-color 220ms ease; will-change: transform; }
+  .fsv-card:hover { transform: translateY(-5px); box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-accent) 55%, transparent), 0 20px 50px rgba(0,0,0,0.6); }
+  .fsv-faq summary { list-style: none; cursor: pointer; }
+  .fsv-faq summary::-webkit-details-marker { display: none; }
+  .fsv-faq[open] .fsv-faq-plus { transform: rotate(45deg); color: var(--color-accent); }
+  @media (prefers-reduced-motion: reduce) {
+    .fsv-rise, .fsv-fade { opacity: 1; transform: none; animation: none; }
+    .fsv-glow { animation: none; }
+    .fsv-marquee { animation: none; }
+    .fsv-orbit-chip { animation: none; }
+    .fsv-growth-line { animation: none; stroke-dashoffset: 0; }
+    .fsv-growth-dot { animation: none; opacity: 1; }
+    .fsv-deck-spin { animation: none; }
+    .fsv-order-bub { animation: none; opacity: 1; }
+    .fsv-deck { transform: none; }
+    .fsv-live-dot { animation: none; }
+    .fsv-route-anim, .fsv-node { animation: none; }
+    .fsv-shimmer { animation: none; }
+    .fsv-card::before { display: none; }
+  }
+  /* standout effects */
+  .fsv-progress { position: fixed; top: 0; left: 0; height: 3px; width: 100%; transform-origin: 0 50%; transform: scaleX(0); background: linear-gradient(90deg, var(--color-accent), var(--color-accent-300)); z-index: 200; box-shadow: 0 0 12px color-mix(in srgb, var(--color-accent) 60%, transparent); }
+  .fsv-shimmer { display: inline-block; padding-right: 0.12em; margin-right: -0.12em; background: linear-gradient(100deg, var(--color-accent) 25%, var(--color-accent-100) 50%, var(--color-accent) 75%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; animation: fsvShimmer 4.5s linear infinite; }
+  @keyframes fsvShimmer { to { background-position: -220% 0; } }
+  .fsv-card { position: relative; }
+  .fsv-card::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; opacity: 0; transition: opacity 240ms ease; background: radial-gradient(320px circle at var(--mx,50%) var(--my,50%), color-mix(in srgb, var(--color-accent) 15%, transparent), transparent 62%); pointer-events: none; }
+  .fsv-card:hover::before { opacity: 1; }
+  .fsv-nav-links a { position: relative; text-decoration: none; color: color-mix(in srgb, var(--color-text) 68%, transparent); font-size: 14px; transition: color 200ms ease; }
+  .fsv-nav-links a:hover { color: var(--color-text); }
+  .fsv-nav-links a::after { content: ""; position: absolute; left: 0; bottom: -6px; height: 2px; width: 100%; background: var(--color-accent); transform: scaleX(0); transform-origin: left; transition: transform 240ms cubic-bezier(0.16,1,0.3,1); }
+  .fsv-nav-links a:hover::after { transform: scaleX(1); }
+  /* glass */
+  .fsv-glass { position: relative; background: linear-gradient(180deg, color-mix(in srgb, #fff 12%, transparent), color-mix(in srgb, #fff 3%, transparent)); backdrop-filter: blur(26px) saturate(1.8) brightness(1.12); -webkit-backdrop-filter: blur(26px) saturate(1.8) brightness(1.12); border: 1px solid color-mix(in srgb, #fff 18%, transparent); box-shadow: inset 0 1px 1px color-mix(in srgb, #fff 40%, transparent), inset 0 -1px 1px color-mix(in srgb, #fff 6%, transparent), inset 0 0 20px color-mix(in srgb, #fff 5%, transparent), 0 14px 40px color-mix(in srgb, #000 45%, transparent); }
+  .fsv-glass::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background: radial-gradient(120% 90% at 30% -20%, color-mix(in srgb, #fff 26%, transparent), transparent 55%); opacity: 0.7; }
+  .fsv-glass-cta { position: relative; display: inline-flex; align-items: center; gap: 12px; height: 54px; padding: 0 30px; border-radius: 999px; color: #f4f4f7; font-size: 15px; font-weight: 500; letter-spacing: -0.01em; white-space: nowrap; text-decoration: none; background: color-mix(in srgb, #fff 7%, transparent); backdrop-filter: blur(20px) saturate(1.6); -webkit-backdrop-filter: blur(20px) saturate(1.6); border: 1px solid color-mix(in srgb, #fff 16%, transparent); box-shadow: inset 0 1px 1px color-mix(in srgb, #fff 28%, transparent), inset 0 0 12px color-mix(in srgb, #fff 5%, transparent), 0 10px 30px color-mix(in srgb, #000 45%, transparent); transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease; overflow: hidden; }
+  @property --fsv-ang { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+  .fsv-glass-cta::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px; z-index: 2; pointer-events: none; background: conic-gradient(from var(--fsv-ang), transparent 0deg, transparent 210deg, color-mix(in srgb, #fff 55%, transparent) 285deg, #ffffff 312deg, color-mix(in srgb, #fff 55%, transparent) 338deg, transparent 360deg); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; filter: drop-shadow(0 0 4px color-mix(in srgb, #fff 55%, transparent)); animation: fsvBorderSpin 3.4s linear infinite; }
+  @keyframes fsvBorderSpin { to { --fsv-ang: 360deg; } }
+  .fsv-glass-cta > * { position: relative; z-index: 1; }
+  .fsv-glass-cta .fsv-cta-ic { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; background: radial-gradient(120% 120% at 30% 22%, #ffffff, #d9d9e2); color: #161826; box-shadow: inset 0 1px 1px #fff, 0 2px 6px color-mix(in srgb, #000 32%, transparent); transition: transform 260ms ease; }
+  .fsv-glass-cta:hover { transform: translateY(-1px); border-color: color-mix(in srgb, #fff 28%, transparent); box-shadow: inset 0 1px 1px color-mix(in srgb, #fff 34%, transparent), inset 0 0 14px color-mix(in srgb, #fff 8%, transparent), 0 14px 38px color-mix(in srgb, #000 52%, transparent); }
+  .fsv-glass-cta:hover .fsv-cta-ic { transform: rotate(90deg) scale(1.06); }
+  @media (prefers-reduced-motion: reduce) { .fsv-glass-cta::before { animation: none; } }
+  .fsv-glass-cta.static::before { display: none; }
+  .fsv-glass-cta.block { width: 100%; justify-content: center; }
+  .fsv-glass-cta.sm { height: 42px; padding: 0 22px; gap: 9px; font-size: 14px; }
+  .fsv-glass-cta.sm .fsv-cta-ic { width: 30px; height: 30px; }
+  .fsv-soc:hover { border-color: var(--color-accent) !important; background: color-mix(in srgb, var(--color-accent) 14%, transparent); }
+  .fsv-foot-link { transition: color 200ms ease; }
+  .fsv-foot-link:hover { color: var(--color-text) !important; }
+  .btn-primary:hover { box-shadow: 0 0 20px color-mix(in srgb, var(--color-accent) 35%, transparent); }
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      .fsv-progress { animation: fsvProgress linear both; animation-timeline: scroll(root); }
+    }
+  }
+  @keyframes fsvProgress { to { transform: scaleX(1); } }
+  .fsv-route { fill: none; stroke: var(--color-accent); stroke-width: 1.5; stroke-dasharray: 4 7; opacity: 0.85; }
+  .fsv-route-anim { animation: fsvDash 3s linear infinite; }
+  @keyframes fsvDash { to { stroke-dashoffset: -44; } }
+  .fsv-node { animation: fsvPulse 2.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+  @keyframes fsvPulse { 0%,100% { opacity: .5; } 50% { opacity: 1; } }
+  .fsv-arc-base { fill: none; stroke: color-mix(in srgb, var(--color-accent) 42%, transparent); stroke-width: 1.6; }
+  .fsv-arc-flow { fill: none; stroke: var(--color-accent); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 16 190; stroke-dashoffset: 0; animation: fsvFlow 3s linear infinite; filter: drop-shadow(0 0 5px var(--color-accent)); }
+  @keyframes fsvFlow { to { stroke-dashoffset: -206; } }
+  @media (prefers-reduced-motion: reduce) { .fsv-arc-flow { animation: none; stroke-dasharray: none; opacity: 0.9; stroke-width: 2; } }
+  .fsv-why-card::before { content: ""; position: absolute; inset: 0; z-index: 0; border-radius: inherit; opacity: 0; transition: opacity 260ms ease; background: radial-gradient(300px circle at 50% 0%, color-mix(in srgb, var(--color-accent) 16%, transparent), transparent 70%); pointer-events: none; }
+  .fsv-why-card > * { position: relative; z-index: 1; }
+  .fsv-why-card:hover { border-color: color-mix(in srgb, var(--color-accent) 55%, transparent); transform: translateY(-4px); }
+  .fsv-why-card:hover::before { opacity: 1; }
+  .fsv-why-card:hover .fsv-why-ic { background: color-mix(in srgb, var(--color-accent) 16%, transparent); }
+  .fsv-why-row { display: grid; grid-template-columns: auto 1fr; gap: 22px; padding: 24px 0; border-top: 1px solid var(--color-divider); transition: border-color 240ms ease; }
+  .fsv-why-row:last-child { border-bottom: 1px solid var(--color-divider); }
+  .fsv-why-num { font-family: var(--font-heading); font-size: 15px; font-weight: 600; letter-spacing: 0.06em; color: var(--color-accent); padding-top: 4px; font-variant-numeric: tabular-nums; }
+  .fsv-why-row:hover { border-top-color: color-mix(in srgb, var(--color-accent) 55%, transparent); }
+  .fsv-orbit-chip { position: absolute; z-index: 3; display: inline-flex; align-items: center; gap: 8px; padding: 9px 13px; border-radius: 999px; background: color-mix(in srgb, #fff 7%, transparent); backdrop-filter: blur(12px); border: 1px solid color-mix(in srgb, #fff 15%, transparent); box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 18%, transparent), var(--shadow-sm); font-size: 12.5px; font-weight: 500; color: var(--color-text); white-space: nowrap; animation: fsvFloat 6s ease-in-out infinite; }
+  .fsv-orbit-chip:nth-child(4) { animation-delay: -1s; } .fsv-orbit-chip:nth-child(5) { animation-delay: -2s; } .fsv-orbit-chip:nth-child(6) { animation-delay: -3s; } .fsv-orbit-chip:nth-child(7) { animation-delay: -4s; } .fsv-orbit-chip:nth-child(8) { animation-delay: -5s; }
+  @keyframes fsvFloat { 0%,100% { translate: 0 0; } 50% { translate: 0 -6px; } }
+  .fsv-growth-line { stroke-dasharray: 620; stroke-dashoffset: 620; animation: fsvGrowthDraw 2.4s cubic-bezier(0.16,1,0.3,1) 0.5s forwards; }
+  @keyframes fsvGrowthDraw { to { stroke-dashoffset: 0; } }
+  .fsv-growth-dot { opacity: 0; animation: fsvGrowthDot 0.5s ease 2.9s forwards, fsvGrowthPulse 2s ease-in-out 3.4s infinite; }
+  @keyframes fsvGrowthDot { to { opacity: 1; } }
+  @keyframes fsvGrowthPulse { 0%,100% { r: 4; } 50% { r: 5.5; } }
+  .fsv-live { display: inline-flex; align-items: center; gap: 5px; margin-left: 4px; padding: 2px 8px; border-radius: 999px; background: color-mix(in srgb, var(--color-accent) 16%, transparent); color: var(--color-accent-100); font-size: 10px; font-weight: 600; letter-spacing: 0.08em; }
+  .fsv-live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--color-accent); animation: fsvLiveBlink 2.8s ease-in-out infinite; }
+  @keyframes fsvLiveBlink { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+  .fsv-deck { transform: perspective(1400px) rotateY(-9deg) rotateX(3deg); transition: transform 500ms cubic-bezier(0.16,1,0.3,1); }
+  .fsv-hero-visual:hover .fsv-deck { transform: perspective(1400px) rotateY(-3deg) rotateX(1deg); }
+  .fsv-deck-spin { animation: fsvSpin 16s linear infinite; }
+  @keyframes fsvSpin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+  .fsv-order-bub { position: absolute; z-index: 3; display: inline-flex; align-items: center; gap: 7px; padding: 8px 13px; border-radius: 999px; background: color-mix(in srgb, #fff 9%, transparent); backdrop-filter: blur(12px); border: 1px solid color-mix(in srgb, #fff 16%, transparent); box-shadow: var(--shadow-md); font-size: 12.5px; font-weight: 500; color: var(--color-text); white-space: nowrap; opacity: 0; animation: fsvOrderPop 4.8s ease-in-out infinite; }
+  .fsv-ob-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--color-accent); box-shadow: 0 0 8px var(--color-accent); }
+  @keyframes fsvOrderPop { 0% { opacity: 0; transform: translateY(10px) scale(0.92); } 12%,30% { opacity: 1; transform: translateY(0) scale(1); } 45%,100% { opacity: 0; transform: translateY(-10px) scale(0.96); } }
+  .fsv-mile-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; grid-template-rows: repeat(2, 1fr); gap: 12px; grid-template-areas: "a b" "a c" "d d"; max-width: 480px; margin-left: auto; }
+  .fsv-mile-card { position: relative; margin: 0; overflow: hidden; border-radius: var(--radius-lg); border: 1px solid var(--color-divider); background: var(--color-surface); }
+  .fsv-mile-card img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(0.82) brightness(0.9); transition: transform 500ms cubic-bezier(0.16,1,0.3,1), filter 500ms ease; }
+  .fsv-mile-card::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, transparent 45%, color-mix(in srgb, var(--color-bg) 82%, transparent)); }
+  .fsv-mile-card figcaption { position: absolute; left: 14px; bottom: 13px; z-index: 1; }
+  .fsv-mile-tag { display: inline-flex; align-items: center; gap: 7px; padding: 6px 12px; border-radius: 999px; background: color-mix(in srgb, var(--color-bg) 55%, transparent); backdrop-filter: blur(8px); border: 1px solid color-mix(in srgb, #fff 12%, transparent); font-size: 12px; font-weight: 500; color: var(--color-text); }
+  .fsv-mile-tag::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--color-accent); box-shadow: 0 0 7px var(--color-accent); }
+  .fsv-mile-card:hover img { transform: scale(1.04); filter: saturate(0.95) brightness(1); }
+  .fsv-pyramid { position: relative; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .fsv-pyr-glow { position: absolute; top: -8%; left: 50%; transform: translateX(-50%); width: 62%; height: 70%; background: radial-gradient(closest-side, color-mix(in srgb, var(--color-accent) 22%, transparent), transparent 72%); filter: blur(36px); pointer-events: none; }
+  .fsv-pyr-row { position: relative; display: flex; justify-content: center; gap: 12px; }
+  .fsv-pyr-tile { width: clamp(80px, 10vw, 124px); aspect-ratio: 1; min-height: 0 !important; }
+  .fsv-pyr-tile.apex { width: clamp(94px, 12vw, 140px); border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-divider)); box-shadow: 0 0 0 5px color-mix(in srgb, var(--color-accent) 10%, transparent); }
+  .fsv-pyr-slot { position: relative; overflow: hidden; border-radius: var(--radius-lg); border: 1px dashed color-mix(in srgb, var(--color-accent) 42%, var(--color-divider)); background: color-mix(in srgb, var(--color-accent) 6%, var(--color-surface)); }
+  @media (prefers-reduced-motion: reduce) { .fsv-why-card:hover { transform: none; } }
+  /* testimonial marquee */
+  .fsv-tmarquee { position: relative; display: flex; flex-direction: column; gap: 20px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+  .fsv-trow { display: flex; gap: 20px; width: max-content; will-change: transform; }
+  .fsv-trow-a { animation: fsvTMarquee 64s linear infinite; }
+  .fsv-trow-b { animation: fsvTMarqueeR 78s linear infinite; }
+  @keyframes fsvTMarquee { to { transform: translateX(-50%); } }
+  @keyframes fsvTMarqueeR { from { transform: translateX(-50%); } to { transform: none; } }
+  .fsv-tmarquee:hover .fsv-trow { animation-play-state: paused; }
+  .fsv-tcard { flex: none; width: 340px; margin: 0 !important; }
+  @media (prefers-reduced-motion: reduce) { .fsv-trow-a, .fsv-trow-b { animation: none; } .fsv-tmarquee { -webkit-mask-image: none; mask-image: none; flex-wrap: wrap; } .fsv-tcard { width: min(340px, 100%); } }
+</style>
+</helmet>
+<template id="__bundler_thumbnail">
+  <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:radial-gradient(120% 120% at 50% 30%,#2a2c45,#161826);">
+    <svg width="40%" viewBox="0 0 24 24" fill="#9184d9" aria-hidden="true"><path d="M12 1.6c.9 4.6 3.9 7.6 8.4 8.4-4.5.9-7.5 3.9-8.4 8.4-.9-4.5-3.9-7.5-8.4-8.4C8.1 9.2 11.1 6.2 12 1.6z" transform="rotate(0 12 12)"></path><path d="M12 3.2c.7 3.7 3.1 6.1 6.8 6.8-3.7.7-6.1 3.1-6.8 6.8-.7-3.7-3.1-6.1-6.8-6.8C8.9 9.3 11.3 6.9 12 3.2z"></path></svg>
+  </div>
+</template>
+<div class="fsv-wrap">
+  <div class="fsv-progress" aria-hidden="true"></div>
+
+  <!-- ============ NAV ============ -->
+  <header style="position: sticky; top: 0; z-index: 100; padding: 14px 0 4px;">
+    <div class="fsv-container">
+      <nav class="fsv-navpill fsv-glass" style="display: flex; align-items: center; gap: 20px; height: 60px; padding: 0 8px 0 22px; border-radius: 999px;">
+      <a href="#home" class="nav-brand" style="display: flex; align-items: center; gap: 10px; color: var(--color-text); text-decoration: none;">
+        <img src="assets/4s-logo.png" alt="4Starventure" style="width: 32px; height: 32px; object-fit: contain;">
+        4Starventure
+      </a>
+      <div class="fsv-nav-links" style="display: flex; align-items: center; gap: 30px; margin: 0 auto;">
+        <a href="#services">Services</a>
+        <a href="#payments">Payments</a>
+        <a href="#fulfillment">Fulfillment</a>
+        <a href="#why">Why us</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <a href="#contact" class="fsv-nav-cta fsv-glass-cta sm">Talk to us</a>
+      <button class="btn btn-secondary btn-icon fsv-menu-btn" aria-label="Open menu" onClick="{{ toggleNav }}">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+      </nav>
+    </div>
+    <sc-if value="{{ navOpen }}" hint-placeholder-val="{{ false }}">
+      <div style="border-top: 1px solid var(--color-divider); background: var(--color-surface);">
+        <div class="fsv-container" style="display: flex; flex-direction: column; padding-top: 12px; padding-bottom: 16px; gap: 2px;">
+          <a href="#services" onClick="{{ closeNav }}" style="padding: 11px 2px; color: var(--color-text); text-decoration: none; font-size: 15px;">Services</a>
+          <a href="#payments" onClick="{{ closeNav }}" style="padding: 11px 2px; color: var(--color-text); text-decoration: none; font-size: 15px;">Payments</a>
+          <a href="#fulfillment" onClick="{{ closeNav }}" style="padding: 11px 2px; color: var(--color-text); text-decoration: none; font-size: 15px;">Fulfillment</a>
+          <a href="#why" onClick="{{ closeNav }}" style="padding: 11px 2px; color: var(--color-text); text-decoration: none; font-size: 15px;">Why us</a>
+          <a href="#faq" onClick="{{ closeNav }}" style="padding: 11px 2px; color: var(--color-text); text-decoration: none; font-size: 15px;">FAQ</a>
+          <a href="#contact" onClick="{{ closeNav }}" class="fsv-glass-cta static block">Talk to us</a>
+        </div>
+      </div>
+    </sc-if>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section id="home" style="scroll-margin-top: 80px; position: relative;">
+    <div class="fsv-glow" id="fsv-hero-glow" style="position: absolute; left: 72%; top: 16%; width: 760px; height: 620px; transform: translate(-50%, -50%); background: radial-gradient(closest-side, color-mix(in srgb, var(--color-accent) 34%, transparent), transparent 70%); filter: blur(28px); pointer-events: none; z-index: 0;"></div>
+    <div class="fsv-container" style="position: relative; z-index: 1; padding-top: 92px; padding-bottom: 96px;">
+      <div class="fsv-hero-grid">
+        <div>
+          <span class="tag tag-outline fsv-fade" style="animation-delay: 0.05s;">Cross-border ecommerce infrastructure</span>
+          <h1 style="margin: 26px 0 0; font-size: clamp(42px, 6vw, 66px); line-height: 1.04; letter-spacing: -0.03em; font-weight: 500;">
+            <span class="fsv-rise" style="animation-delay: 0.10s;">Sell across borders</span><br>
+            <span class="fsv-rise" style="animation-delay: 0.20s;">on a store built to</span><br>
+            <span class="fsv-rise" style="animation-delay: 0.30s;"><span class="fsv-shimmer">get paid.</span></span>
+          </h1>
+          <p class="fsv-fade" style="animation-delay: 0.5s; margin: 26px 0 0; font-size: 18px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 74%, transparent); max-width: 32em;">Rented Shopify, OnePage and WooCommerce stores with stable payment gateways and fulfillment to 40+ countries.</p>
+          <div class="fsv-fade" style="animation-delay: 0.62s; display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px;">
+            <a href="#contact" class="fsv-glass-cta fsv-fade">Talk to us</a>
+            <a href="#services" class="fsv-glass-cta static">See our services</a>
+          </div>
+          <div class="fsv-fade" style="animation-delay: 0.74s;"></div>
+        </div>
+        <div class="fsv-hero-visual fsv-fade" style="animation-delay: 0.4s; position: relative;">
+          <div class="fsv-deck-spin" style="position: absolute; left: 55%; top: 42%; width: 460px; height: 460px; transform: translate(-50%,-50%); background: conic-gradient(from 0deg, transparent, color-mix(in srgb, var(--color-accent) 30%, transparent), transparent 45%, color-mix(in srgb, var(--color-accent) 22%, transparent), transparent 75%); filter: blur(34px); border-radius: 50%; pointer-events: none;"></div>
+          <div class="fsv-deck" style="position: relative; z-index: 1; padding: 4px 2px;">
+            <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;">
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent);"><span style="display: inline-flex; color: var(--color-accent);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18"></path></svg></span>Global revenue<span class="fsv-live"><span class="fsv-live-dot"></span>LIVE</span></div>
+                <div style="margin-top: 8px; font-size: 30px; font-weight: 500; letter-spacing: -0.02em;">$284,910</div>
+              </div>
+              <span style="display: inline-flex; align-items: center; gap: 5px; padding: 6px 11px; border-radius: 999px; background: color-mix(in srgb, var(--color-accent) 18%, transparent); border: 1px solid color-mix(in srgb, var(--color-accent) 45%, transparent); color: var(--color-accent-100); font-size: 12.5px; font-weight: 600; white-space: nowrap;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"></path><path d="M9 7h8v8"></path></svg>+38% MoM</span>
+            </div>
+            <!-- chart -->
+            <svg viewBox="0 0 340 150" style="display: block; width: 100%; height: auto; margin-top: 14px;" preserveAspectRatio="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="fsvGrowthFill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="var(--color-accent)" stop-opacity="0.42"></stop>
+                  <stop offset="100%" stop-color="var(--color-accent)" stop-opacity="0"></stop>
+                </linearGradient>
+                <linearGradient id="fsvScan" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="var(--color-accent)" stop-opacity="0"></stop>
+                  <stop offset="70%" stop-color="var(--color-accent)" stop-opacity="0.16"></stop>
+                  <stop offset="100%" stop-color="var(--color-accent)" stop-opacity="0"></stop>
+                </linearGradient>
+              </defs>
+              <g stroke="color-mix(in srgb, #fff 8%, transparent)" stroke-width="1">
+                <line x1="0" y1="38" x2="340" y2="38"></line>
+                <line x1="0" y1="76" x2="340" y2="76"></line>
+                <line x1="0" y1="114" x2="340" y2="114"></line>
+              </g>
+              <path class="fsv-growth-area" d="M0 128 L48 118 L96 122 L144 96 L192 84 L240 54 L288 40 L340 16 L340 150 L0 150 Z" fill="url(#fsvGrowthFill)"></path>
+              <path class="fsv-growth-line" d="M0 128 L48 118 L96 122 L144 96 L192 84 L240 54 L288 40 L340 16" fill="none" stroke="var(--color-accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+              <rect class="fsv-scan" x="-70" y="0" width="70" height="150" fill="url(#fsvScan)" style="display: none;"></rect>
+              <circle class="fsv-growth-dot" cx="340" cy="16" r="4" fill="#fff"></circle>
+            </svg>
+            <!-- mini stats -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 18px; background: color-mix(in srgb, #fff 8%, transparent); border: 1px solid color-mix(in srgb, #fff 8%, transparent); border-radius: var(--radius-md); overflow: hidden;">
+              <div style="padding: 12px 14px; background: color-mix(in srgb, var(--color-bg) 55%, transparent);"><div style="font-size: 17px; font-weight: 500;">48.6k</div><div style="font-size: 11.5px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">Sessions</div></div>
+              <div style="padding: 12px 14px; background: color-mix(in srgb, var(--color-bg) 55%, transparent);"><div style="font-size: 17px; font-weight: 500;">12.4k</div><div style="font-size: 11.5px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">Orders</div></div>
+              <div style="padding: 12px 14px; background: color-mix(in srgb, var(--color-bg) 55%, transparent);"><div style="font-size: 17px; font-weight: 500;">3.8%</div><div style="font-size: 11.5px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">Conversion rate</div></div>
+            </div>
+          </div>
+          <!-- live order bubbles (in card margins only) -->
+          <div class="fsv-order-bub" style="top: -9%; right: 12%; animation-delay: 0s;"><span class="fsv-ob-dot"></span>+$128 · US</div>
+          <div class="fsv-order-bub" style="top: -9%; right: 46%; animation-delay: 3.6s;"><span class="fsv-ob-dot"></span>+$212 · CA</div>
+          <div class="fsv-order-bub" style="top: 42%; left: -7%; animation-delay: 1.2s;"><span class="fsv-ob-dot"></span>+€94 · DE</div>
+          <div class="fsv-order-bub" style="top: 58%; right: -7%; animation-delay: 0.6s;"><span class="fsv-ob-dot"></span>+$88 · AU</div>
+          <div class="fsv-order-bub" style="bottom: -8%; left: 14%; animation-delay: 4.8s;"><span class="fsv-ob-dot"></span>+€139 · FR</div>
+          <div class="fsv-order-bub" style="bottom: -8%; right: 10%; animation-delay: 2.4s;"><span class="fsv-ob-dot"></span>+£77 · UK</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LOGO MARQUEE ============ -->
+  <sc-if value="{{ showTrust }}" hint-placeholder-val="{{ true }}">
+  <section style="border-top: 1px solid var(--color-divider); border-bottom: 1px solid var(--color-divider); padding: 30px 0;">
+    <p style="text-align: center; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 45%, transparent); margin: 0 0 22px;">Platforms and payment rails we build on</p>
+    <div class="fsv-marquee-mask" style="position: relative; overflow: hidden; -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);">
+      <div class="fsv-marquee" style="align-items: center;">
+        <span class="fsv-logo" style="opacity: 0.72;"><img src="https://cdn.simpleicons.org/shopify/cfd3e5" alt="Shopify" style="height: 22px;"></span>
+        <span class="fsv-logo" style="opacity: 0.72;"><img src="https://cdn.simpleicons.org/woocommerce/cfd3e5" alt="WooCommerce" style="height: 76px;"></span>
+        <span class="fsv-logo" style="opacity: 0.72;"><span class="fsv-word" style="color: #cfd3e5;">OnePage</span></span>
+        <span class="fsv-logo" style="opacity: 0.72;"><img src="https://cdn.simpleicons.org/paypal/cfd3e5" alt="PayPal" style="height: 20px;"></span>
+        <span class="fsv-logo" style="opacity: 0.72;"><img src="https://cdn.simpleicons.org/visa/cfd3e5" alt="Visa" style="height: 30px;"></span>
+        <span class="fsv-logo" style="opacity: 0.72;"><img src="https://cdn.simpleicons.org/mastercard/cfd3e5" alt="Mastercard" style="height: 28px;"></span>
+        <span class="fsv-logo" style="opacity: 0.72;"><span class="fsv-word" style="color: #cfd3e5; font-size: 13px;">AMEX</span></span>
+        <span class="fsv-logo" style="opacity: 0.72;"><img src="https://cdn.simpleicons.org/discover/cfd3e5" alt="Discover" style="height: 50px;"></span>
+        <span class="fsv-logo" style="opacity: 0.72;"><img src="assets/airwallex-cfd3e5.png" alt="Airwallex" style="height: 17px;"></span>
+        <span class="fsv-logo" style="opacity: 0.72;"><img src="https://cdn.simpleicons.org/applepay/cfd3e5" alt="Apple Pay" style="height: 40px;"></span>
+        <span class="fsv-logo" style="opacity: 0.72;"><img src="https://cdn.simpleicons.org/googlepay/cfd3e5" alt="Google Pay" style="height: 36px;"></span>
+        <span class="fsv-logo" style="opacity: 0.72;"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon" style="height: 20px; filter: brightness(0) invert(0.82);"></span>
+        <span class="fsv-logo" style="opacity: 0.72;"><img src="https://cdn.simpleicons.org/ebay/cfd3e5" alt="eBay" style="height: 36px;"></span>
+        <span class="fsv-logo" style="opacity: 0.72;"><img src="https://cdn.simpleicons.org/jcb/cfd3e5" alt="JCB" style="height: 42px;"></span>
+        <span class="fsv-logo" style="opacity: 0.72;"><img src="https://cdn.simpleicons.org/dinersclub/cfd3e5" alt="Diners Club" style="height: 28px;"></span>
+        <span class="fsv-logo" style="opacity: 0.72;"><img src="assets/shoppay-cfd3e5.png" alt="Shop Pay" style="height: 15px;"></span>
+        <!-- duplicate for seamless loop -->
+        <span class="fsv-logo" aria-hidden="true" style="opacity: 0.72;"><img src="https://cdn.simpleicons.org/shopify/cfd3e5" alt="" style="height: 22px;"></span>
+        <span class="fsv-logo" aria-hidden="true" style="opacity: 0.72;"><img src="https://cdn.simpleicons.org/woocommerce/cfd3e5" alt="" style="height: 76px;"></span>
+        <span class="fsv-logo" aria-hidden="true" style="opacity: 0.72;"><span class="fsv-word" style="color: #cfd3e5;">OnePage</span></span>
+        <span class="fsv-logo" aria-hidden="true" style="opacity: 0.72;"><img src="https://cdn.simpleicons.org/paypal/cfd3e5" alt="" style="height: 20px;"></span>
+        <span class="fsv-logo" aria-hidden="true" style="opacity: 0.72;"><img src="https://cdn.simpleicons.org/visa/cfd3e5" alt="" style="height: 30px;"></span>
+        <span class="fsv-logo" aria-hidden="true" style="opacity: 0.72;"><img src="https://cdn.simpleicons.org/mastercard/cfd3e5" alt="" style="height: 28px;"></span>
+        <span class="fsv-logo" aria-hidden="true" style="opacity: 0.72;"><span class="fsv-word" style="color: #cfd3e5; font-size: 13px;">AMEX</span></span>
+        <span class="fsv-logo" aria-hidden="true" style="opacity: 0.72;"><img src="https://cdn.simpleicons.org/discover/cfd3e5" alt="" style="height: 50px;"></span>
+        <span class="fsv-logo" aria-hidden="true" style="opacity: 0.72;"><img src="assets/airwallex-cfd3e5.png" alt="Airwallex" style="height: 17px;"></span>
+        <span class="fsv-logo" aria-hidden="true" style="opacity: 0.72;"><img src="https://cdn.simpleicons.org/applepay/cfd3e5" alt="" style="height: 40px;"></span>
+        <span class="fsv-logo" aria-hidden="true" style="opacity: 0.72;"><img src="https://cdn.simpleicons.org/googlepay/cfd3e5" alt="" style="height: 36px;"></span>
+        <span class="fsv-logo" aria-hidden="true" style="opacity: 0.72;"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="" style="height: 20px; filter: brightness(0) invert(0.82);"></span>
+        <span class="fsv-logo" aria-hidden="true" style="opacity: 0.72;"><img src="https://cdn.simpleicons.org/ebay/cfd3e5" alt="" style="height: 36px;"></span>
+        <span class="fsv-logo" aria-hidden="true" style="opacity: 0.72;"><img src="https://cdn.simpleicons.org/jcb/cfd3e5" alt="" style="height: 42px;"></span>
+        <span class="fsv-logo" aria-hidden="true" style="opacity: 0.72;"><img src="https://cdn.simpleicons.org/dinersclub/cfd3e5" alt="" style="height: 28px;"></span>
+        <span class="fsv-logo" aria-hidden="true" style="opacity: 0.72;"><img src="assets/shoppay-cfd3e5.png" alt="Shop Pay" style="height: 15px;"></span>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ============ SERVICES ============ -->
+  <section id="services" style="scroll-margin-top: 80px;">
+    <div class="fsv-container" style="padding-top: 96px; padding-bottom: 96px;">
+      <div data-reveal style="max-width: 38em; margin-bottom: 48px;">
+        <h6 style="color: var(--color-accent); margin: 0 0 14px;">What we set up for you</h6>
+        <h2 style="margin: 0; font-size: clamp(30px, 4vw, 40px); line-height: 1.08; letter-spacing: -0.02em; font-weight: 500;">Three ways to have a store, without building one yourself.</h2>
+        <p style="margin: 18px 0 0; font-size: 17px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 72%, transparent);">We configure, host and hand over a ready-to-sell storefront on the platform that fits your product and your market. You focus on marketing; we keep the store standing.</p>
+      </div>
+      <div class="fsv-split" data-reveal style="grid-template-columns: 1.4fr 1fr;">
+        <div class="card fsv-card" style="padding: var(--space-8); gap: var(--space-4); justify-content: space-between;">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <img src="https://cdn.simpleicons.org/shopify/9184d9" alt="Shopify" style="height: 30px;">
+            <span class="tag tag-accent">Most popular</span>
+          </div>
+          <div>
+            <h3 style="margin: 18px 0 0; font-size: 24px; font-weight: 500;">Shopify store rental</h3>
+            <p style="margin: 12px 0 0; font-size: 15px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 72%, transparent);">A fully configured Shopify storefront on our infrastructure, with themes, apps and checkout tuned for Western buyers.</p>
+          </div>
+          <ul style="list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 11px;">
+            <li style="display: flex; gap: 10px; font-size: 14.5px; line-height: 1.5;"><span style="color: var(--color-accent); flex: none;">→</span>Theme, product pages and checkout set up for you</li>
+            <li style="display: flex; gap: 10px; font-size: 14.5px; line-height: 1.5;"><span style="color: var(--color-accent); flex: none;">→</span>Shopify Payments, PayPal or Airwallex connected</li>
+            <li style="display: flex; gap: 10px; font-size: 14.5px; line-height: 1.5;"><span style="color: var(--color-accent); flex: none;">→</span>Backup store ready if a gateway is restricted</li>
+          </ul>
+        </div>
+        <div style="display: grid; grid-template-rows: 1fr 1fr; gap: 18px;">
+          <div class="card fsv-card" style="padding: var(--space-6); gap: var(--space-2);">
+            <span class="tag tag-outline" style="align-self: flex-start;">OnePage</span>
+            <h3 style="margin: 6px 0 0; font-size: 19px; font-weight: 500;">Single-product landers</h3>
+            <p style="margin: 6px 0 0; font-size: 14px; line-height: 1.55; color: color-mix(in srgb, var(--color-text) 70%, transparent);">High-converting single-product pages for fast paid-traffic campaigns, wired to a stable gateway.</p>
+          </div>
+          <div class="card fsv-card" style="padding: var(--space-6); gap: var(--space-2);">
+            <span class="tag tag-outline" style="align-self: flex-start;">WooCommerce</span>
+            <h3 style="margin: 6px 0 0; font-size: 19px; font-weight: 500;">Self-hosted stores</h3>
+            <p style="margin: 6px 0 0; font-size: 14px; line-height: 1.55; color: color-mix(in srgb, var(--color-text) 70%, transparent);">Self-owned WordPress stores when you want full control of data, plugins and hosting.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PAYMENTS ============ -->
+  <section id="payments" style="scroll-margin-top: 80px; position: relative; border-top: 1px solid var(--color-divider); border-bottom: 1px solid var(--color-divider);">
+    <div style="position: absolute; top: 0; left: -120px; width: 620px; height: 480px; background: radial-gradient(closest-side, color-mix(in srgb, var(--color-accent) 16%, transparent), transparent 70%); filter: blur(30px); pointer-events: none;"></div>
+    <div class="fsv-container" style="position: relative; padding-top: 96px; padding-bottom: 96px;">
+      <div data-reveal style="max-width: 40em; margin-bottom: 46px;">
+        <h2 style="margin: 0; font-size: clamp(30px, 4vw, 40px); line-height: 1.08; letter-spacing: -0.02em; font-weight: 500;">Payment gateways that actually stay open.</h2>
+        <p style="margin: 18px 0 0; font-size: 17px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 72%, transparent);">The hardest part of cross-border selling is getting paid. We set you up on proven gateways and keep a backup ready, so a single review never stops your cash flow.</p>
+      </div>
+      <div class="fsv-autofit" data-reveal>
+        <div class="card fsv-card" style="padding: var(--space-8); gap: var(--space-2);">
+          <img src="https://cdn.simpleicons.org/paypal/cfd3e5" alt="PayPal" style="height: 30px;">
+          <h3 style="margin: 16px 0 6px; font-size: 19px; font-weight: 500;">PayPal</h3>
+          <p style="margin: 0; font-size: 14px; line-height: 1.55; color: color-mix(in srgb, var(--color-text) 70%, transparent);">Buyer-trusted checkout for US and EU shoppers, with account setup guidance to reduce holds.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; align-items: center;"><span class="tag tag-neutral">PayPal Wallet</span><span class="tag tag-neutral">Pay Later</span><span class="tag tag-neutral">Venmo</span></div>
+        </div>
+        <div class="card fsv-card" style="padding: var(--space-8); gap: var(--space-2);">
+          <img src="https://cdn.simpleicons.org/shopify/cfd3e5" alt="Shopify" style="height: 30px;">
+          <h3 style="margin: 16px 0 6px; font-size: 19px; font-weight: 500;">Shopify Payments</h3>
+          <p style="margin: 0; font-size: 14px; line-height: 1.55; color: color-mix(in srgb, var(--color-text) 70%, transparent);">Native card processing inside Shopify, the smoothest checkout when your store qualifies.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; align-items: center;"><span class="tag tag-neutral">Shop Pay Installments</span><span class="tag tag-neutral">Amazon Pay</span><span class="tag tag-neutral">USDC</span></div>
+        </div>
+        <div class="card fsv-card" style="padding: var(--space-8); gap: var(--space-2);">
+                    <span style="display: block; text-align: center;"><img src="assets/airwallex-mark2.png" alt="Airwallex" style="height: 30px; display: inline-block;"></span>
+          <h3 style="margin: 16px 0 6px; font-size: 19px; font-weight: 500;">Airwallex</h3>
+          <p style="margin: 0; font-size: 14px; line-height: 1.55; color: color-mix(in srgb, var(--color-text) 70%, transparent);">Global card acquiring with multi-currency collection, ideal when you sell into several markets at once.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; align-items: center;"><span class="tag tag-neutral">Alipay</span><span class="tag tag-neutral">Skrill</span><span class="tag tag-neutral">GrabPay</span><span class="tag tag-neutral">+ more</span></div>
+        </div>
+      </div>
+      <div data-reveal style="margin-top: 20px; border: 1px solid var(--color-divider); border-radius: var(--radius-lg); padding: 26px 28px; background: var(--color-surface);">
+        <p style="margin: 0 0 20px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 48%, transparent);">Cards and wallets your customers can pay with</p>
+        <div class="fsv-wallet-row" style="display: flex; flex-wrap: wrap; align-items: center; gap: 34px;">
+          <span class="fsv-wallet"><img src="https://cdn.simpleicons.org/visa/e9e9ed" alt="Visa" style="height: 38px;"></span>
+          <span class="fsv-wallet"><img src="https://cdn.simpleicons.org/mastercard/e9e9ed" alt="Mastercard" style="height: 34px;"></span>
+          <span class="fsv-wallet"><span style="font-size: 15px; font-weight: 600; color: #e9e9ed; letter-spacing: 0.02em;">AMEX</span></span>
+          <span class="fsv-wallet"><img src="https://cdn.simpleicons.org/discover/e9e9ed" alt="Discover" style="height: 52px;"></span>
+          <span class="fsv-wallet"><img src="https://cdn.simpleicons.org/applepay/e9e9ed" alt="Apple Pay" style="height: 44px;"></span>
+          <span class="fsv-wallet"><img src="https://cdn.simpleicons.org/googlepay/e9e9ed" alt="Google Pay" style="height: 40px;"></span>
+          <span class="fsv-wallet"><img src="https://cdn.simpleicons.org/jcb/e9e9ed" alt="JCB" style="height: 48px;"></span>
+          <span class="fsv-wallet"><img src="https://cdn.simpleicons.org/dinersclub/e9e9ed" alt="Diners Club" style="height: 32px;"></span>
+          <span class="fsv-wallet"><img src="assets/shoppay-e9e9ed.png" alt="Shop Pay" style="height: 15px;"></span>
+          <span class="fsv-wallet"><img src="https://cdn.simpleicons.org/venmo/e9e9ed" alt="Venmo" style="height: 56px;"></span>
+          <span class="fsv-wallet"><img src="assets/amazonpay-e9e9ed.png" alt="Amazon Pay" style="height: 16px;"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FULFILLMENT ============ -->
+  <section id="fulfillment" style="scroll-margin-top: 80px;">
+    <div class="fsv-container" style="padding-top: 96px; padding-bottom: 96px;">
+      <div style="margin-bottom: 40px;" data-reveal>
+        <h6 style="color: var(--color-accent); margin: 0 0 14px;">Worldwide fulfillment</h6>
+        <h2 style="margin: 0; max-width: 15em; font-size: clamp(32px, 4.6vw, 52px); line-height: 1.02; letter-spacing: -0.03em; font-weight: 500;">Orders shipped <em class="fsv-shimmer" style="position: relative; font-style: italic; font-weight: 600; white-space: nowrap;">worldwide<span style="position: absolute; left: 0; right: 0; bottom: -0.06em; height: 0.09em; border-radius: 999px; background: linear-gradient(90deg, transparent, var(--color-accent), transparent); opacity: 0.85;"></span></em>, tracked end to end.</h2>
+      </div>
+
+      <!-- world map (brand vector) -->
+      <div data-reveal style="position: relative; margin-bottom: 24px;">
+        <div style="position: absolute; left: 50%; top: 6%; transform: translateX(-50%); width: 60%; max-width: 620px; height: 240px; background: radial-gradient(closest-side, color-mix(in srgb, var(--color-accent) 20%, transparent), transparent 72%); filter: blur(40px); pointer-events: none;"></div>
+        <div style="position: relative; overflow: hidden; aspect-ratio: 2200 / 792;">
+          <img src="assets/fulfillment-map-vector.png" alt="Worldwide fulfillment network connecting North America, South America, Europe, Africa, the Middle East, Asia and Australia" style="display: block; width: 100%; height: auto;" loading="lazy">
+          <svg viewBox="0 0 1100 470" preserveAspectRatio="xMidYMid meet" style="position: absolute; top: 0; left: 0; width: 100%; aspect-ratio: 1100 / 470; pointer-events: none;" aria-hidden="true">
+            <path class="fsv-arc-base" d="M579.6,102.6L566.1,93.9L551.4,86.2L535.4,79.6L518.0,74.3L499.2,70.5L479.4,68.3L458.8,67.9L437.9,69.3L417.3,72.4L397.3,77.0L378.1,83.1L360.0,90.3L326.8,107.8L297.6,128.3"></path>
+            <path class="fsv-arc-base" d="M579.6,102.6L560.7,111.3L543.2,121.6L527.1,133.1L512.1,145.7L485.2,173.2L461.4,202.5L440.0,232.7L420.3,263.3L383.5,324.3"></path>
+            <path class="fsv-arc-base" d="M579.6,102.6L590.6,139.4L599.2,177.1L611.9,252.6"></path>
+            <path class="fsv-arc-base" d="M579.6,102.6L608.9,118.3L634.7,137.1L657.7,158.1L678.2,180.6"></path>
+            <path class="fsv-arc-base" d="M579.6,102.6L610.0,91.8L626.5,88.1L643.9,85.9L661.9,85.1L680.3,85.7L717.2,91.3L752.7,101.9L785.7,116.6L815.7,134.4L842.7,154.4"></path>
+            <path class="fsv-arc-base" d="M579.6,102.6L610.6,101.6L641.8,104.9L672.2,112.2L701.1,123.0L728.1,136.6L753.0,152.4L776.0,169.9L797.1,188.5L816.4,207.8L834.1,227.6L865.2,268.0L892.1,308.3L916.4,347.3"></path>
+            <path class="fsv-arc-flow" style="animation-delay: 0.2s;" d="M579.6,102.6L566.1,93.9L551.4,86.2L535.4,79.6L518.0,74.3L499.2,70.5L479.4,68.3L458.8,67.9L437.9,69.3L417.3,72.4L397.3,77.0L378.1,83.1L360.0,90.3L326.8,107.8L297.6,128.3"></path>
+            <path class="fsv-arc-flow" style="animation-delay: 1.4s;" d="M579.6,102.6L560.7,111.3L543.2,121.6L527.1,133.1L512.1,145.7L485.2,173.2L461.4,202.5L440.0,232.7L420.3,263.3L383.5,324.3"></path>
+            <path class="fsv-arc-flow" style="animation-delay: 0.8s;" d="M579.6,102.6L590.6,139.4L599.2,177.1L611.9,252.6"></path>
+            <path class="fsv-arc-flow" style="animation-delay: 2.1s;" d="M579.6,102.6L608.9,118.3L634.7,137.1L657.7,158.1L678.2,180.6"></path>
+            <path class="fsv-arc-flow" style="animation-delay: 0.5s;" d="M579.6,102.6L610.0,91.8L626.5,88.1L643.9,85.9L661.9,85.1L680.3,85.7L717.2,91.3L752.7,101.9L785.7,116.6L815.7,134.4L842.7,154.4"></path>
+            <path class="fsv-arc-flow" style="animation-delay: 1.1s;" d="M579.6,102.6L610.6,101.6L641.8,104.9L672.2,112.2L701.1,123.0L728.1,136.6L753.0,152.4L776.0,169.9L797.1,188.5L816.4,207.8L834.1,227.6L865.2,268.0L892.1,308.3L916.4,347.3"></path>
+          </svg>
+        </div>
+        <div class="fsv-map-note" style="position: absolute; left: 4px; bottom: 2px; display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: var(--color-text);"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-accent); box-shadow: 0 0 10px var(--color-accent);"></span>Shipping to 40+ countries · live tracking on every order</div>
+      </div>
+
+      <!-- feature cards -->
+      <div class="fsv-autofit" data-reveal>
+        <div class="fsv-why-card" style="position: relative; overflow: hidden; padding: 24px 22px 26px; background: var(--color-surface); border: 1px solid var(--color-divider); border-radius: var(--radius-lg); transition: border-color 240ms ease, transform 240ms ease;">
+          <span class="fsv-why-ic" style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: var(--radius-md); border: 1px solid var(--color-accent); color: var(--color-accent); margin-bottom: 16px; transition: background 240ms ease;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18"></path></svg></span>
+          <h3 style="margin: 0; font-size: 16px; font-weight: 500;">Global coverage</h3>
+          <p style="margin: 8px 0 0; font-size: 14px; line-height: 1.55; color: color-mix(in srgb, var(--color-text) 68%, transparent);">Delivery to 40+ destination countries across the US, EU and beyond.</p>
+        </div>
+        <div class="fsv-why-card" style="position: relative; overflow: hidden; padding: 24px 22px 26px; background: var(--color-surface); border: 1px solid var(--color-divider); border-radius: var(--radius-lg); transition: border-color 240ms ease, transform 240ms ease;">
+          <span class="fsv-why-ic" style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: var(--radius-md); border: 1px solid var(--color-accent); color: var(--color-accent); margin-bottom: 16px; transition: background 240ms ease;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path><path d="M3 21v-5h5"></path></svg></span>
+          <h3 style="margin: 0; font-size: 16px; font-weight: 500;">Auto tracking sync</h3>
+          <p style="margin: 8px 0 0; font-size: 14px; line-height: 1.55; color: color-mix(in srgb, var(--color-text) 68%, transparent);">Tracking numbers pushed back to Shopify, WooCommerce and OnePage automatically.</p>
+        </div>
+        <div class="fsv-why-card" style="position: relative; overflow: hidden; padding: 24px 22px 26px; background: var(--color-surface); border: 1px solid var(--color-divider); border-radius: var(--radius-lg); transition: border-color 240ms ease, transform 240ms ease;">
+          <span class="fsv-why-ic" style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: var(--radius-md); border: 1px solid var(--color-accent); color: var(--color-accent); margin-bottom: 16px; transition: background 240ms ease;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 8 12 3 3 8l9 5 9-5Z"></path><path d="M3 8v8l9 5 9-5V8"></path><path d="M12 13v8"></path></svg></span>
+          <h3 style="margin: 0; font-size: 16px; font-weight: 500;">Product sourcing</h3>
+          <p style="margin: 8px 0 0; font-size: 14px; line-height: 1.55; color: color-mix(in srgb, var(--color-text) 68%, transparent);">We help you source and stock winning SKUs, ready to ship.</p>
+        </div>
+        <div class="fsv-why-card" style="position: relative; overflow: hidden; padding: 24px 22px 26px; background: var(--color-surface); border: 1px solid var(--color-divider); border-radius: var(--radius-lg); transition: border-color 240ms ease, transform 240ms ease;">
+          <span class="fsv-why-ic" style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: var(--radius-md); border: 1px solid var(--color-accent); color: var(--color-accent); margin-bottom: 16px; transition: background 240ms ease;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 4 6v5c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V6l-8-3Z"></path><path d="m9 12 2 2 4-4"></path></svg></span>
+          <h3 style="margin: 0; font-size: 16px; font-weight: 500;">Fewer chargebacks</h3>
+          <p style="margin: 8px 0 0; font-size: 14px; line-height: 1.55; color: color-mix(in srgb, var(--color-text) 68%, transparent);">Reliable, tracked delivery keeps disputes and gateway holds low.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STATS BAND (presence) ============ -->
+  <sc-if value="{{ showStats }}" hint-placeholder-val="{{ true }}">
+  <section style="position: relative; background: var(--color-section); overflow: hidden;">
+    <div class="fsv-glow" style="position: absolute; top: -160px; left: 40%; width: 640px; height: 520px; background: radial-gradient(closest-side, var(--color-section-glow), transparent 70%); filter: blur(20px); pointer-events: none;"></div>
+    <div class="fsv-container" style="position: relative; padding-top: 62px; padding-bottom: 62px;">
+      <div class="fsv-autofit" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 40px;">
+        <div>
+          <div data-count="2" data-suffix="h" style="font-size: 46px; font-weight: 500; letter-spacing: -0.03em; color: #fff; line-height: 1;">2h</div>
+          <div style="margin-top: 10px; font-size: 14px; color: color-mix(in srgb, #fff 72%, transparent);">Average store setup time</div>
+        </div>
+        <div>
+          <div data-count="40" data-suffix="+" style="font-size: 46px; font-weight: 500; letter-spacing: -0.03em; color: #fff; line-height: 1;">40+</div>
+          <div style="margin-top: 10px; font-size: 14px; color: color-mix(in srgb, #fff 72%, transparent);">Fulfillment destinations</div>
+        </div>
+        <div>
+          <div data-count="500" data-suffix="+" style="font-size: 46px; font-weight: 500; letter-spacing: -0.03em; color: #fff; line-height: 1;">500+</div>
+          <div style="margin-top: 10px; font-size: 14px; color: color-mix(in srgb, #fff 72%, transparent);">Customers served</div>
+        </div>
+        <div>
+          <div data-count="10" data-suffix="+" style="font-size: 46px; font-weight: 500; letter-spacing: -0.03em; color: #fff; line-height: 1;">10+</div>
+          <div style="margin-top: 10px; font-size: 14px; color: color-mix(in srgb, #fff 72%, transparent);">Payment partners</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ============ WHY US ============ -->
+  <section id="why" style="scroll-margin-top: 80px;">
+    <div class="fsv-container" style="padding-top: 96px; padding-bottom: 96px;">
+      <div class="fsv-why-grid" style="display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 40px 72px; align-items: start;">
+        <div data-reveal style="position: sticky; top: 96px;">
+          <h6 style="color: var(--color-accent); margin: 0 0 14px;">Why us</h6>
+          <h2 style="margin: 0; font-size: clamp(30px, 4vw, 42px); line-height: 1.05; letter-spacing: -0.02em; font-weight: 500;">Built for sellers who just want to sell.</h2>
+          <p style="margin: 20px 0 0; font-size: 16px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 70%, transparent);">Whether you are launching your first store or scaling dozens, we remove the operational blockers between your product and a paying customer.</p>
+        </div>
+        <div data-reveal>
+          <div class="fsv-why-row">
+            <span class="fsv-why-num">01</span>
+            <div>
+              <h3 style="margin: 0; font-size: 19px; font-weight: 500;">Done-for-you setup</h3>
+              <p style="margin: 8px 0 0; font-size: 15px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 70%, transparent);">New to ecommerce? You get a working store without touching a theme editor or a payment dashboard.</p>
+            </div>
+          </div>
+          <div class="fsv-why-row">
+            <span class="fsv-why-num">02</span>
+            <div>
+              <h3 style="margin: 0; font-size: 19px; font-weight: 500;">Gateway resilience</h3>
+              <p style="margin: 8px 0 0; font-size: 15px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 70%, transparent);">Been locked out before? We keep backups and proven account practices so payments keep flowing.</p>
+            </div>
+          </div>
+          <div class="fsv-why-row">
+            <span class="fsv-why-num">03</span>
+            <div>
+              <h3 style="margin: 0; font-size: 19px; font-weight: 500;">Western-ready checkout</h3>
+              <p style="margin: 8px 0 0; font-size: 15px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 70%, transparent);">Selling into the US and EU? Localized checkout, currencies and cards your buyers already trust.</p>
+            </div>
+          </div>
+          <div class="fsv-why-row">
+            <span class="fsv-why-num">04</span>
+            <div>
+              <h3 style="margin: 0; font-size: 19px; font-weight: 500;">Made to scale</h3>
+              <p style="margin: 8px 0 0; font-size: 15px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 70%, transparent);">Running an agency? Spin up and manage many stores with consistent setup and one point of contact.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MILESTONES ============ -->
+  <section id="milestones" style="scroll-margin-top: 80px; border-top: 1px solid var(--color-divider);">
+    <div class="fsv-container" style="padding-top: 96px; padding-bottom: 96px;">
+      <div class="fsv-mile-wrap" style="display: grid; grid-template-columns: 0.82fr 1.18fr; gap: 48px 64px; align-items: center;">
+        <div data-reveal>
+          <h6 style="color: var(--color-accent); margin: 0 0 14px;">Track record</h6>
+          <h2 style="margin: 0; font-size: clamp(30px, 4vw, 44px); line-height: 1.04; letter-spacing: -0.02em; font-weight: 500;">Milestone-made — and <em class="fsv-shimmer" style="position: relative; font-style: italic; font-weight: 600;">Shopify agrees</em>.</h2>
+          <p style="margin: 20px 0 0; font-size: 16px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 70%, transparent);">Every single day, every single order builds toward something bigger. These milestones started with one sale — and grew, order by order, into greatness. Start now, stay consistent, and you could be the next store to earn one.</p>
+          <div style="display: flex; gap: 40px; margin-top: 32px;">
+            <div>
+              <div style="font-size: 32px; font-weight: 500; letter-spacing: -0.02em;">100k+</div>
+              <div style="margin-top: 6px; font-size: 13px; color: color-mix(in srgb, var(--color-text) 60%, transparent);">Orders on a single store</div>
+            </div>
+            <div style="width: 1px; background: var(--color-divider);"></div>
+            <div>
+              <div style="font-size: 32px; font-weight: 500; letter-spacing: -0.02em;">500+</div>
+              <div style="margin-top: 6px; font-size: 13px; color: color-mix(in srgb, var(--color-text) 60%, transparent);">Customers served</div>
+            </div>
+          </div>
+        </div>
+        <div class="fsv-pyramid" data-reveal>
+          <div class="fsv-pyr-glow"></div>
+          <div class="fsv-pyr-row">
+            <figure class="fsv-mile-card fsv-pyr-tile apex">
+              <img src="assets/milestone-100000.png" alt="Shopify 100,000 orders Milestone award" loading="lazy">
+            </figure>
+          </div>
+          <div class="fsv-pyr-row">
+            <figure class="fsv-mile-card fsv-pyr-tile">
+              <img src="assets/milestone-10k.png" alt="Shopify 10,000 orders Milestone award" loading="lazy">
+            </figure>
+            <div class="fsv-pyr-tile fsv-pyr-slot" style="display: none;"><image-slot id="milestone-5" shape="rounded" radius="12" placeholder="Add milestone"></image-slot></div>
+            <figure class="fsv-mile-card fsv-pyr-tile">
+              <img src="assets/milestone-100k-dark.png" alt="Shopify 100,000 orders Milestone award in box" loading="lazy">
+            </figure>
+          </div>
+          <div class="fsv-pyr-row">
+            <figure class="fsv-mile-card fsv-pyr-tile">
+              <img src="assets/milestone-desk.png" alt="Shopify Milestone trophies for multiple stores" loading="lazy">
+            </figure>
+            <figure class="fsv-mile-card fsv-pyr-tile">
+              <img src="assets/milestone-10k-box.png" alt="Shopify 10,000 orders Milestone award, boxed" loading="lazy">
+            </figure>
+            <div class="fsv-pyr-tile fsv-pyr-slot" style="display: none;"><image-slot id="milestone-6" shape="rounded" radius="12" placeholder="Add milestone"></image-slot></div>
+            <figure class="fsv-mile-card fsv-pyr-tile">
+              <img src="assets/milestone-bag.png" alt="Shopify Milestone trophy" loading="lazy">
+            </figure>
+          </div>
+          <div class="fsv-pyr-row">
+            <figure class="fsv-mile-card fsv-pyr-tile">
+              <img src="assets/milestone-letter.png" alt="Shopify Milestone congratulations letter for 10,000 lifetime orders" loading="lazy">
+            </figure>
+            <figure class="fsv-mile-card fsv-pyr-tile">
+              <img src="assets/milestone-shelf.png" alt="Shopify Milestone award and letter" loading="lazy">
+            </figure>
+            <figure class="fsv-mile-card fsv-pyr-tile">
+              <img src="assets/milestone-white.png" alt="Shopify Milestone award with congratulations letter" loading="lazy">
+            </figure>
+            <figure class="fsv-mile-card fsv-pyr-tile">
+              <img src="assets/milestone-tell.png" alt="Shopify Milestone award, now tell the world" loading="lazy">
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <sc-if value="{{ showTestimonials }}" hint-placeholder-val="{{ true }}">
+  <section style="border-top: 1px solid var(--color-divider);">
+    <div class="fsv-container" style="padding-top: 96px; padding-bottom: 96px;">
+      <h2 data-reveal style="margin: 0 0 46px; font-size: clamp(34px, 5vw, 60px); line-height: 1.02; letter-spacing: -0.03em; font-weight: 500; max-width: 15em;">Sellers who <em class="fsv-shimmer" style="position: relative; font-style: italic; font-weight: 600; white-space: nowrap;">stopped worrying<span style="position: absolute; left: 0; right: 0; bottom: -0.06em; height: 0.09em; border-radius: 999px; background: linear-gradient(90deg, transparent, var(--color-accent), transparent); opacity: 0.85;"></span></em> <span style="display: inline-flex; vertical-align: middle; width: clamp(84px, 9vw, 132px); height: clamp(40px, 4.4vw, 62px); border-radius: 999px; overflow: hidden; margin: 0 0.1em; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-accent) 40%, transparent);"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&amp;w=600&amp;auto=format&amp;fit=crop" alt="" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy"></span> about the backend.</h2>
+      <div class="fsv-tmarquee" data-reveal>
+        <div class="fsv-trow fsv-trow-a">
+        <figure class="card fsv-card fsv-tcard" style="padding: 24px; gap: 14px; border-color: color-mix(in srgb, var(--color-accent) 40%, var(--color-divider));">
+          <div style="display: flex; gap: 3px; color: var(--color-accent); font-size: 13px;">★★★★★</div>
+          <blockquote style="margin: 0; font-size: 17px; line-height: 1.55;">"They had my Shopify store live and taking Airwallex payments in two days. I finally just run ads instead of fighting the checkout."</blockquote>
+          <figcaption style="display: flex; align-items: center; gap: 12px;">
+            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="" width="42" height="42" style="width: 42px; height: 42px; border-radius: 50%; object-fit: cover;" loading="lazy">
+            <span><span style="display: block; font-size: 14px; font-weight: 500;">Linda Harper</span><span style="display: block; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">DTC seller, US market</span></span>
+          </figcaption>
+        </figure>
+        <figure class="card fsv-card fsv-tcard" style="padding: 24px; gap: 14px;">
+          <div style="display: flex; gap: 3px; color: var(--color-accent); font-size: 13px;">★★★★★</div>
+          <blockquote style="margin: 0; font-size: 15px; line-height: 1.55;">"After PayPal froze my old account, their backup gateway kept sales running the same week. That saved my Q4."</blockquote>
+          <figcaption style="display: flex; align-items: center; gap: 12px;">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="" width="38" height="38" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;" loading="lazy">
+            <span><span style="display: block; font-size: 14px; font-weight: 500;">Marco Bianchi</span><span style="display: block; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">Founder, homeware brand (EU)</span></span>
+          </figcaption>
+        </figure>
+        <figure class="card fsv-card fsv-tcard" style="padding: 24px; gap: 14px;">
+          <div style="display: flex; gap: 3px; color: var(--color-accent); font-size: 13px;">★★★★★</div>
+          <blockquote style="margin: 0; font-size: 15px; line-height: 1.55;">"We manage 18 client stores through them. Same setup every time, and fulfillment tracking just shows up in each store."</blockquote>
+          <figcaption style="display: flex; align-items: center; gap: 12px;">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="" width="38" height="38" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;" loading="lazy">
+            <span><span style="display: block; font-size: 14px; font-weight: 500;">Julia Novak</span><span style="display: block; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">Lead, dropshipping agency (EU)</span></span>
+          </figcaption>
+        </figure>
+        <figure class="card fsv-card fsv-tcard" style="padding: 24px; gap: 14px;">
+          <div style="display: flex; gap: 3px; color: var(--color-accent); font-size: 13px;">★★★★★</div>
+          <blockquote style="margin: 0; font-size: 15px; line-height: 1.55;">"I'd never built a store before. They set the whole thing up and showed me how to run it. First sale came in three days later."</blockquote>
+          <figcaption style="display: flex; align-items: center; gap: 12px;">
+            <img src="https://randomuser.me/api/portraits/women/12.jpg" alt="" width="38" height="38" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;" loading="lazy">
+            <span><span style="display: block; font-size: 14px; font-weight: 500;">Emily Carter</span><span style="display: block; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">First-time seller, US</span></span>
+          </figcaption>
+        </figure>
+        <figure class="card fsv-card fsv-tcard" style="padding: 24px; gap: 14px;">
+          <div style="display: flex; gap: 3px; color: var(--color-accent); font-size: 13px;">★★★★★</div>
+          <blockquote style="margin: 0; font-size: 15px; line-height: 1.55;">"Cross-border checkout used to be my biggest headache. Now EU and US buyers pay with cards they already trust."</blockquote>
+          <figcaption style="display: flex; align-items: center; gap: 12px;">
+            <img src="https://randomuser.me/api/portraits/men/54.jpg" alt="" width="38" height="38" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;" loading="lazy">
+            <span><span style="display: block; font-size: 14px; font-weight: 500;">Thomas Vogel</span><span style="display: block; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">Electronics store, Germany</span></span>
+          </figcaption>
+        </figure>
+        <figure class="card fsv-card fsv-tcard" style="padding: 24px; gap: 14px; border-color: color-mix(in srgb, var(--color-accent) 40%, var(--color-divider));">
+          <div style="display: flex; gap: 3px; color: var(--color-accent); font-size: 13px;">★★★★★</div>
+          <blockquote style="margin: 0; font-size: 17px; line-height: 1.55;">"They had my Shopify store live and taking Airwallex payments in two days. I finally just run ads instead of fighting the checkout."</blockquote>
+          <figcaption style="display: flex; align-items: center; gap: 12px;">
+            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="" width="42" height="42" style="width: 42px; height: 42px; border-radius: 50%; object-fit: cover;" loading="lazy" aria-hidden="true">
+            <span><span style="display: block; font-size: 14px; font-weight: 500;">Linda Harper</span><span style="display: block; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">DTC seller, US market</span></span>
+          </figcaption>
+        </figure>
+        <figure class="card fsv-card fsv-tcard" style="padding: 24px; gap: 14px;">
+          <div style="display: flex; gap: 3px; color: var(--color-accent); font-size: 13px;">★★★★★</div>
+          <blockquote style="margin: 0; font-size: 15px; line-height: 1.55;">"After PayPal froze my old account, their backup gateway kept sales running the same week. That saved my Q4."</blockquote>
+          <figcaption style="display: flex; align-items: center; gap: 12px;">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="" width="38" height="38" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;" loading="lazy" aria-hidden="true">
+            <span><span style="display: block; font-size: 14px; font-weight: 500;">Marco Bianchi</span><span style="display: block; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">Founder, homeware brand (EU)</span></span>
+          </figcaption>
+        </figure>
+        <figure class="card fsv-card fsv-tcard" style="padding: 24px; gap: 14px;">
+          <div style="display: flex; gap: 3px; color: var(--color-accent); font-size: 13px;">★★★★★</div>
+          <blockquote style="margin: 0; font-size: 15px; line-height: 1.55;">"We manage 18 client stores through them. Same setup every time, and fulfillment tracking just shows up in each store."</blockquote>
+          <figcaption style="display: flex; align-items: center; gap: 12px;">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="" width="38" height="38" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;" loading="lazy" aria-hidden="true">
+            <span><span style="display: block; font-size: 14px; font-weight: 500;">Julia Novak</span><span style="display: block; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">Lead, dropshipping agency (EU)</span></span>
+          </figcaption>
+        </figure>
+        <figure class="card fsv-card fsv-tcard" style="padding: 24px; gap: 14px;">
+          <div style="display: flex; gap: 3px; color: var(--color-accent); font-size: 13px;">★★★★★</div>
+          <blockquote style="margin: 0; font-size: 15px; line-height: 1.55;">"I'd never built a store before. They set the whole thing up and showed me how to run it. First sale came in three days later."</blockquote>
+          <figcaption style="display: flex; align-items: center; gap: 12px;">
+            <img src="https://randomuser.me/api/portraits/women/12.jpg" alt="" width="38" height="38" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;" loading="lazy" aria-hidden="true">
+            <span><span style="display: block; font-size: 14px; font-weight: 500;">Emily Carter</span><span style="display: block; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">First-time seller, US</span></span>
+          </figcaption>
+        </figure>
+        <figure class="card fsv-card fsv-tcard" style="padding: 24px; gap: 14px;">
+          <div style="display: flex; gap: 3px; color: var(--color-accent); font-size: 13px;">★★★★★</div>
+          <blockquote style="margin: 0; font-size: 15px; line-height: 1.55;">"Cross-border checkout used to be my biggest headache. Now EU and US buyers pay with cards they already trust."</blockquote>
+          <figcaption style="display: flex; align-items: center; gap: 12px;">
+            <img src="https://randomuser.me/api/portraits/men/54.jpg" alt="" width="38" height="38" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;" loading="lazy" aria-hidden="true">
+            <span><span style="display: block; font-size: 14px; font-weight: 500;">Thomas Vogel</span><span style="display: block; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">Electronics store, Germany</span></span>
+          </figcaption>
+        </figure>
+        </div>
+        <div class="fsv-trow fsv-trow-b">
+        <figure class="card fsv-card fsv-tcard" style="padding: 24px; gap: 14px;">
+          <div style="display: flex; gap: 3px; color: var(--color-accent); font-size: 13px;">★★★★★</div>
+          <blockquote style="margin: 0; font-size: 15px; line-height: 1.55;">"The team feels like an extension of ours. One contact, quick answers, and my beauty brand looks premium in every market."</blockquote>
+          <figcaption style="display: flex; align-items: center; gap: 12px;">
+            <img src="https://randomuser.me/api/portraits/women/29.jpg" alt="" width="38" height="38" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;" loading="lazy">
+            <span><span style="display: block; font-size: 14px; font-weight: 500;">Sophie Laurent</span><span style="display: block; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">Beauty brand, France</span></span>
+          </figcaption>
+        </figure>
+        <figure class="card fsv-card fsv-tcard" style="padding: 24px; gap: 14px;">
+          <div style="display: flex; gap: 3px; color: var(--color-accent); font-size: 13px;">★★★★★</div>
+          <blockquote style="margin: 0; font-size: 15px; line-height: 1.55;">"I run this store in my retirement. Honestly thought it'd be too technical for me — they made it simple."</blockquote>
+          <figcaption style="display: flex; align-items: center; gap: 12px;">
+            <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="" width="38" height="38" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;" loading="lazy">
+            <span><span style="display: block; font-size: 14px; font-weight: 500;">Robert Klein</span><span style="display: block; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">Side store owner, US</span></span>
+          </figcaption>
+        </figure>
+        <figure class="card fsv-card fsv-tcard" style="padding: 24px; gap: 14px;">
+          <div style="display: flex; gap: 3px; color: var(--color-accent); font-size: 13px;">★★★★★</div>
+          <blockquote style="margin: 0; font-size: 15px; line-height: 1.55;">"Fulfillment to North America is fast and tracking syncs back automatically. My customers stopped asking 'where's my order'."</blockquote>
+          <figcaption style="display: flex; align-items: center; gap: 12px;">
+            <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="" width="38" height="38" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;" loading="lazy">
+            <span><span style="display: block; font-size: 14px; font-weight: 500;">Amelia Brooks</span><span style="display: block; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">Home decor brand, US</span></span>
+          </figcaption>
+        </figure>
+        <figure class="card fsv-card fsv-tcard" style="padding: 24px; gap: 14px;">
+          <div style="display: flex; gap: 3px; color: var(--color-accent); font-size: 13px;">★★★★★</div>
+          <blockquote style="margin: 0; font-size: 15px; line-height: 1.55;">"Been locked out of two processors before. Their backup accounts mean I don't lose a single day of sales anymore."</blockquote>
+          <figcaption style="display: flex; align-items: center; gap: 12px;">
+            <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="" width="38" height="38" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;" loading="lazy">
+            <span><span style="display: block; font-size: 14px; font-weight: 500;">Daniel Foster</span><span style="display: block; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">Multi-store operator, US</span></span>
+          </figcaption>
+        </figure>
+        <figure class="card fsv-card fsv-tcard" style="padding: 24px; gap: 14px;">
+          <div style="display: flex; gap: 3px; color: var(--color-accent); font-size: 13px;">★★★★★</div>
+          <blockquote style="margin: 0; font-size: 15px; line-height: 1.55;">"Scaled from one store to six with the same launch playbook. Every store looks consistent and just works."</blockquote>
+          <figcaption style="display: flex; align-items: center; gap: 12px;">
+            <img src="https://randomuser.me/api/portraits/women/56.jpg" alt="" width="38" height="38" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;" loading="lazy">
+            <span><span style="display: block; font-size: 14px; font-weight: 500;">Hannah Meyer</span><span style="display: block; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">Agency owner, Netherlands</span></span>
+          </figcaption>
+        </figure>
+        <figure class="card fsv-card fsv-tcard" style="padding: 24px; gap: 14px;">
+          <div style="display: flex; gap: 3px; color: var(--color-accent); font-size: 13px;">★★★★★</div>
+          <blockquote style="margin: 0; font-size: 15px; line-height: 1.55;">"The team feels like an extension of ours. One contact, quick answers, and my beauty brand looks premium in every market."</blockquote>
+          <figcaption style="display: flex; align-items: center; gap: 12px;">
+            <img src="https://randomuser.me/api/portraits/women/29.jpg" alt="" width="38" height="38" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;" loading="lazy" aria-hidden="true">
+            <span><span style="display: block; font-size: 14px; font-weight: 500;">Sophie Laurent</span><span style="display: block; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">Beauty brand, France</span></span>
+          </figcaption>
+        </figure>
+        <figure class="card fsv-card fsv-tcard" style="padding: 24px; gap: 14px;">
+          <div style="display: flex; gap: 3px; color: var(--color-accent); font-size: 13px;">★★★★★</div>
+          <blockquote style="margin: 0; font-size: 15px; line-height: 1.55;">"I run this store in my retirement. Honestly thought it'd be too technical for me — they made it simple."</blockquote>
+          <figcaption style="display: flex; align-items: center; gap: 12px;">
+            <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="" width="38" height="38" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;" loading="lazy" aria-hidden="true">
+            <span><span style="display: block; font-size: 14px; font-weight: 500;">Robert Klein</span><span style="display: block; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">Side store owner, US</span></span>
+          </figcaption>
+        </figure>
+        <figure class="card fsv-card fsv-tcard" style="padding: 24px; gap: 14px;">
+          <div style="display: flex; gap: 3px; color: var(--color-accent); font-size: 13px;">★★★★★</div>
+          <blockquote style="margin: 0; font-size: 15px; line-height: 1.55;">"Fulfillment to North America is fast and tracking syncs back automatically. My customers stopped asking 'where's my order'."</blockquote>
+          <figcaption style="display: flex; align-items: center; gap: 12px;">
+            <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="" width="38" height="38" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;" loading="lazy" aria-hidden="true">
+            <span><span style="display: block; font-size: 14px; font-weight: 500;">Amelia Brooks</span><span style="display: block; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">Home decor brand, US</span></span>
+          </figcaption>
+        </figure>
+        <figure class="card fsv-card fsv-tcard" style="padding: 24px; gap: 14px;">
+          <div style="display: flex; gap: 3px; color: var(--color-accent); font-size: 13px;">★★★★★</div>
+          <blockquote style="margin: 0; font-size: 15px; line-height: 1.55;">"Been locked out of two processors before. Their backup accounts mean I don't lose a single day of sales anymore."</blockquote>
+          <figcaption style="display: flex; align-items: center; gap: 12px;">
+            <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="" width="38" height="38" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;" loading="lazy" aria-hidden="true">
+            <span><span style="display: block; font-size: 14px; font-weight: 500;">Daniel Foster</span><span style="display: block; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">Multi-store operator, US</span></span>
+          </figcaption>
+        </figure>
+        <figure class="card fsv-card fsv-tcard" style="padding: 24px; gap: 14px;">
+          <div style="display: flex; gap: 3px; color: var(--color-accent); font-size: 13px;">★★★★★</div>
+          <blockquote style="margin: 0; font-size: 15px; line-height: 1.55;">"Scaled from one store to six with the same launch playbook. Every store looks consistent and just works."</blockquote>
+          <figcaption style="display: flex; align-items: center; gap: 12px;">
+            <img src="https://randomuser.me/api/portraits/women/56.jpg" alt="" width="38" height="38" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;" loading="lazy" aria-hidden="true">
+            <span><span style="display: block; font-size: 14px; font-weight: 500;">Hannah Meyer</span><span style="display: block; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">Agency owner, Netherlands</span></span>
+          </figcaption>
+        </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ============ FAQ ============ -->
+  <section id="faq" style="scroll-margin-top: 80px; border-top: 1px solid var(--color-divider);">
+    <div class="fsv-container" style="padding-top: 96px; padding-bottom: 96px; max-width: 820px;">
+      <h2 data-reveal style="margin: 0 0 36px; font-size: clamp(28px, 3.4vw, 36px); line-height: 1.1; letter-spacing: -0.02em; font-weight: 500;">Frequently asked questions</h2>
+      <div data-reveal>
+        <details class="fsv-faq" style="border-bottom: 1px solid var(--color-divider);">
+          <summary style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 2px; font-size: 17px; font-weight: 500;">How fast can my store go live?<span class="fsv-faq-plus" style="flex: none; color: var(--color-accent); font-size: 22px; transition: transform 220ms ease;">+</span></summary>
+          <p style="margin: 0; padding: 0 2px 24px; font-size: 15px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 72%, transparent);">Most basic stores are ready in about 2 hours once we have your product details and branding. More complex builds or special requests take longer, but no more than 48 hours.</p>
+        </details>
+        <details class="fsv-faq" style="border-bottom: 1px solid var(--color-divider);">
+          <summary style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 2px; font-size: 17px; font-weight: 500;">How do payouts work?<span class="fsv-faq-plus" style="flex: none; color: var(--color-accent); font-size: 22px; transition: transform 220ms ease;">+</span></summary>
+          <p style="margin: 0; padding: 0 2px 24px; font-size: 15px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 72%, transparent);">Once the business day closes in your selling market's timezone (for example UTC−8 for the US), you can request a payout at any time. The amount you receive is your revenue minus costs — payment gateway fees, goods, and so on. Payouts can be sent in USD or any currency you prefer.</p>
+        </details>
+        <details class="fsv-faq" style="border-bottom: 1px solid var(--color-divider);">
+          <summary style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 2px; font-size: 17px; font-weight: 500;">What happens if a payment gateway gets restricted?<span class="fsv-faq-plus" style="flex: none; color: var(--color-accent); font-size: 22px; transition: transform 220ms ease;">+</span></summary>
+          <p style="margin: 0; padding: 0 2px 24px; font-size: 15px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 72%, transparent);">We prepare backup gateways and store copies in advance, so if one account is put under review we can switch you over quickly and keep sales running.</p>
+        </details>
+        <details class="fsv-faq" style="border-bottom: 1px solid var(--color-divider);">
+          <summary style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 2px; font-size: 17px; font-weight: 500;">Which countries can you fulfill orders to?<span class="fsv-faq-plus" style="flex: none; color: var(--color-accent); font-size: 22px; transition: transform 220ms ease;">+</span></summary>
+          <p style="margin: 0; padding: 0 2px 24px; font-size: 15px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 72%, transparent);">We ship to 40+ countries with a focus on North America and Europe. Tracking numbers are synced back to your store automatically for every order.</p>
+        </details>
+        <details class="fsv-faq" style="border-bottom: 1px solid var(--color-divider);">
+          <summary style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 2px; font-size: 17px; font-weight: 500;">I'm brand new to ecommerce. Can you still help?<span class="fsv-faq-plus" style="flex: none; color: var(--color-accent); font-size: 22px; transition: transform 220ms ease;">+</span></summary>
+          <p style="margin: 0; padding: 0 2px 24px; font-size: 15px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 72%, transparent);">Absolutely. We handle the store, gateway and fulfillment setup end to end, then walk you through running it. You can start selling without any technical background.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" style="scroll-margin-top: 80px; position: relative; border-top: 1px solid var(--color-divider);">
+    <div style="position: absolute; top: -80px; right: 5%; width: 560px; height: 460px; background: radial-gradient(closest-side, color-mix(in srgb, var(--color-accent) 18%, transparent), transparent 70%); filter: blur(30px); pointer-events: none;"></div>
+    <div class="fsv-container" style="position: relative; padding-top: 96px; padding-bottom: 96px;">
+      <div class="fsv-split" style="align-items: start;">
+        <div data-reveal>
+          <h6 style="color: var(--color-accent); margin: 0 0 14px;">Get started</h6>
+          <h2 style="margin: 0; font-size: clamp(30px, 4vw, 40px); line-height: 1.08; letter-spacing: -0.02em; font-weight: 500;">Tell us what you sell. We'll build the rest.</h2>
+          <p style="margin: 18px 0 0; font-size: 17px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 72%, transparent);">Send a message and our team will map out the right store, gateway and fulfillment setup for your market, usually within one business day.</p>
+          <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 32px;">
+            <a href="tel:+13073956166" class="fsv-card" style="display: flex; align-items: center; gap: 14px; background: var(--color-surface); border: 1px solid var(--color-divider); border-radius: var(--radius-md); padding: 15px 17px; color: var(--color-text); text-decoration: none;">
+              <span style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: var(--radius-md); border: 1px solid var(--color-accent); color: var(--color-accent);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></span>
+              <span><span style="display: block; font-weight: 500; font-size: 15px;">Phone</span><span style="display: block; font-size: 13px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">+1 307 395 6166</span></span>
+            </a>
+            <a href="https://t.me/4starventure" class="fsv-card" style="display: flex; align-items: center; gap: 14px; background: var(--color-surface); border: 1px solid var(--color-divider); border-radius: var(--radius-md); padding: 15px 17px; color: var(--color-text); text-decoration: none;">
+              <span style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: var(--radius-md); border: 1px solid var(--color-accent);"><img src="https://cdn.simpleicons.org/telegram/9184d9" alt="" style="height: 20px;"></span>
+              <span><span style="display: block; font-weight: 500; font-size: 15px;">Telegram</span><span style="display: block; font-size: 13px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">@4starventure</span></span>
+            </a>
+            <a href="mailto:support@4starventure.com" target="_blank" class="fsv-card" style="display: flex; align-items: center; gap: 14px; background: var(--color-surface); border: 1px solid var(--color-divider); border-radius: var(--radius-md); padding: 15px 17px; color: var(--color-text); text-decoration: none;">
+              <span style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: var(--radius-md); border: 1px solid var(--color-accent); color: var(--color-accent);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg></span>
+              <span><span style="display: block; font-weight: 500; font-size: 15px;">Email</span><span style="display: block; font-size: 13px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">support@4starventure.com</span></span>
+            </a>
+          </div>
+        </div>
+        <div data-reveal class="card elev-md" style="padding: var(--space-8); border-radius: var(--radius-lg);">
+          <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; flex-direction: column; align-items: center; text-align: center; padding: 40px 12px; gap: 14px;">
+              <span style="display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 50%; border: 1px solid var(--color-accent); color: var(--color-accent);"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span>
+              <h3 style="margin: 0; font-size: 21px; font-weight: 500;">Thanks, we've got it.</h3>
+              <p style="margin: 0; font-size: 14.5px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 72%, transparent); max-width: 26em;">Our team will reach out within one business day. For anything urgent, message us on Zalo or Telegram.</p>
+            </div>
+          </sc-if>
+          <sc-if value="{{ showForm }}" hint-placeholder-val="{{ true }}">
+          <form onSubmit="{{ onSubmit }}" style="display: flex; flex-direction: column; gap: 16px;">
+            <div class="field"><label for="fsv-name">Your name</label><input class="input" id="fsv-name" name="name" required placeholder="Jane Smith"></div>
+            <div class="field"><label for="fsv-email">Email</label><input class="input" id="fsv-email" name="email" type="email" required placeholder="you@example.com"></div>
+            <div class="field"><label for="fsv-platform">What do you need?</label>
+              <select class="input" id="fsv-platform" name="platform" style="cursor: pointer;">
+                <option>Shopify store rental</option>
+                <option>OnePage lander</option>
+                <option>WooCommerce store</option>
+                <option>Payment gateway setup</option>
+                <option>Fulfillment only</option>
+                <option>Not sure yet, advise me</option>
+              </select>
+            </div>
+            <div class="field"><label for="fsv-msg">Tell us about your product and market</label><textarea class="input" id="fsv-msg" name="message" rows="4" placeholder="e.g. Home decor, selling to the US and Germany"></textarea></div>
+            <button type="submit" class="fsv-glass-cta static block" style="border: 1px solid color-mix(in srgb, #fff 16%, transparent); cursor: pointer;">Send message</button>
+            <p style="margin: 0; font-size: 12px; color: color-mix(in srgb, var(--color-text) 50%, transparent); text-align: center;">We reply within one business day. No spam, ever.</p>
+          </form>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="position: relative; overflow: hidden; border-top: 1px solid var(--color-divider); background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--color-accent) 6%, transparent));">
+    <div style="position: absolute; top: -120px; left: 50%; transform: translateX(-50%); width: 720px; height: 360px; background: radial-gradient(closest-side, color-mix(in srgb, var(--color-accent) 20%, transparent), transparent 72%); filter: blur(40px); pointer-events: none;" aria-hidden="true"></div>
+    <div class="fsv-container" style="position: relative; padding-top: 72px; padding-bottom: 28px;">
+      <!-- CTA band -->
+      <div data-reveal class="fsv-split" style="align-items: end; gap: 32px; padding-bottom: 48px; border-bottom: 1px solid var(--color-divider);">
+        <div>
+          <h6 style="color: var(--color-accent); margin: 0 0 14px;">Ready when you are</h6>
+          <h2 style="margin: 0; font-size: clamp(30px, 4.4vw, 50px); line-height: 1.02; letter-spacing: -0.03em; font-weight: 500; max-width: 12em;">Let's put your store <em style="font-style: italic; color: var(--color-accent);">live</em>.</h2>
+        </div>
+        <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+          <a href="#contact" class="fsv-glass-cta">Talk to us</a>
+          <a href="mailto:support@4starventure.com" target="_blank" class="fsv-glass-cta static">Email us</a>
+        </div>
+      </div>
+      <!-- Columns -->
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px; padding-top: 48px;">
+        <div style="max-width: 22em;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="assets/4s-logo.png" alt="4Starventure" style="width: 30px; height: 30px; object-fit: contain;">
+            <span style="font-family: var(--font-heading); font-weight: 500; font-size: 16px;">4Starventure</span>
+          </div>
+          <p style="margin: 16px 0 20px; font-size: 14px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 66%, transparent);">Cross-border ecommerce stores, payment gateways and worldwide fulfillment for sellers reaching Western markets.</p>
+          <div style="display: flex; gap: 10px;">
+            <a href="https://t.me/4starventure" aria-label="Telegram" class="fsv-soc" style="display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--color-divider); color: var(--color-text); transition: border-color 200ms ease, background 200ms ease;"><img src="https://cdn.simpleicons.org/telegram/9184d9" alt="" style="height: 17px;"></a>
+            <a href="mailto:support@4starventure.com" target="_blank" aria-label="Email" class="fsv-soc" style="display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--color-divider); color: var(--color-accent); transition: border-color 200ms ease, background 200ms ease;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg></a>
+            <a href="tel:+13073956166" aria-label="Phone" class="fsv-soc" style="display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--color-divider); color: var(--color-accent); transition: border-color 200ms ease, background 200ms ease;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></a>
+          </div>
+        </div>
+        <div class="fsv-foot-cols" style="display: flex; gap: 64px; flex-wrap: wrap;">
+          <div>
+            <h6 style="margin: 0 0 14px; color: color-mix(in srgb, var(--color-text) 50%, transparent);">Services</h6>
+            <div style="display: flex; flex-direction: column; gap: 11px; font-size: 14px;">
+              <a href="#services" class="fsv-foot-link" style="color: color-mix(in srgb, var(--color-text) 78%, transparent); text-decoration: none;">Store rental</a>
+              <a href="#payments" class="fsv-foot-link" style="color: color-mix(in srgb, var(--color-text) 78%, transparent); text-decoration: none;">Payment gateways</a>
+              <a href="#fulfillment" class="fsv-foot-link" style="color: color-mix(in srgb, var(--color-text) 78%, transparent); text-decoration: none;">Fulfillment</a>
+            </div>
+          </div>
+          <div>
+            <h6 style="margin: 0 0 14px; color: color-mix(in srgb, var(--color-text) 50%, transparent);">Explore</h6>
+            <div style="display: flex; flex-direction: column; gap: 11px; font-size: 14px;">
+              <a href="#why" class="fsv-foot-link" style="color: color-mix(in srgb, var(--color-text) 78%, transparent); text-decoration: none;">Why us</a>
+              <a href="#faq" class="fsv-foot-link" style="color: color-mix(in srgb, var(--color-text) 78%, transparent); text-decoration: none;">FAQ</a>
+              <a href="#contact" class="fsv-foot-link" style="color: color-mix(in srgb, var(--color-text) 78%, transparent); text-decoration: none;">Contact</a>
+            </div>
+          </div>
+          <div>
+            <h6 style="margin: 0 0 14px; color: color-mix(in srgb, var(--color-text) 50%, transparent);">Contact</h6>
+            <div style="display: flex; flex-direction: column; gap: 11px; font-size: 14px;">
+              <a href="https://t.me/4starventure" class="fsv-foot-link" style="color: color-mix(in srgb, var(--color-text) 78%, transparent); text-decoration: none;">Telegram</a>
+              <a href="tel:+13073956166" class="fsv-foot-link" style="color: color-mix(in srgb, var(--color-text) 78%, transparent); text-decoration: none;">+1 307 395 6166</a>
+              <a href="mailto:support@4starventure.com" target="_blank" class="fsv-foot-link" style="color: color-mix(in srgb, var(--color-text) 78%, transparent); text-decoration: none;">support@4starventure.com</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Oversized wordmark -->
+      <div aria-hidden="true" style="margin-top: 48px; font-family: var(--font-heading); font-weight: 600; font-size: clamp(40px, 12.2vw, 158px); line-height: 0.9; letter-spacing: -0.045em; white-space: nowrap; background: linear-gradient(180deg, color-mix(in srgb, var(--color-text) 12%, transparent), transparent 92%); -webkit-background-clip: text; background-clip: text; color: transparent; user-select: none;">4Starventure</div>
+      <div style="margin-top: 8px; padding-top: 22px; border-top: 1px solid var(--color-divider); display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; font-size: 13px; color: color-mix(in srgb, var(--color-text) 45%, transparent);">
+        <span>© 2026 4Starventure. All rights reserved.</span>
+        <span>Stores · Payments · Fulfillment</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200},&quot;showTrustStrip&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;},&quot;showStats&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;},&quot;showTestimonials&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;}}">
+class Component extends DCLogic {
+  state = { navOpen: false, submitted: false };
+  componentDidMount() {
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // count-up stats on scroll into view
+    const nums = Array.from(document.querySelectorAll('[data-count]'));
+    const run = (el) => {
+      const target = parseFloat(el.getAttribute('data-count'));
+      const pre = el.getAttribute('data-prefix') || '';
+      const suf = el.getAttribute('data-suffix') || '';
+      if (reduce) { el.textContent = pre + target + suf; return; }
+      const dur = 1300, start = performance.now();
+      const tick = (now) => {
+        const t = Math.min(1, (now - start) / dur);
+        const e = 1 - Math.pow(1 - t, 3);
+        el.textContent = pre + Math.round(target * e) + suf;
+        if (t < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    if (nums.length && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver((es) => {
+        es.forEach(en => { if (en.isIntersecting) { run(en.target); io.unobserve(en.target); } });
+      }, { threshold: 0.5 });
+      nums.forEach(n => io.observe(n));
+    }
+    if (reduce) return;
+    // spotlight follows cursor inside cards
+    const cardMove = (ev) => {
+      const c = ev.currentTarget, r = c.getBoundingClientRect();
+      c.style.setProperty('--mx', ((ev.clientX - r.left) / r.width * 100) + '%');
+      c.style.setProperty('--my', ((ev.clientY - r.top) / r.height * 100) + '%');
+    };
+    document.querySelectorAll('.fsv-card').forEach(c => c.addEventListener('pointermove', cardMove));
+    // hero glow eases toward cursor
+    const glow = document.getElementById('fsv-hero-glow');
+    const hero = document.getElementById('home');
+    if (glow && hero) {
+      let tx = hero.offsetWidth * 0.72, ty = hero.offsetHeight * 0.16;
+      let cx = tx, cy = ty, raf = null;
+      const loop = () => {
+        cx += (tx - cx) * 0.08; cy += (ty - cy) * 0.08;
+        glow.style.left = cx + 'px'; glow.style.top = cy + 'px';
+        raf = (Math.abs(tx - cx) > 0.5 || Math.abs(ty - cy) > 0.5) ? requestAnimationFrame(loop) : null;
+      };
+      hero.addEventListener('pointermove', (ev) => {
+        const r = hero.getBoundingClientRect();
+        tx = ev.clientX - r.left; ty = ev.clientY - r.top;
+        if (!raf) raf = requestAnimationFrame(loop);
+      });
+    }
+  }
+  renderVals() {
+    const p = this.props;
+    return {
+      showTrust: p.showTrustStrip ?? true,
+      showStats: p.showStats ?? true,
+      showTestimonials: p.showTestimonials ?? true,
+      navOpen: this.state.navOpen,
+      submitted: this.state.submitted,
+      showForm: !this.state.submitted,
+      toggleNav: () => this.setState(s => ({ navOpen: !s.navOpen })),
+      closeNav: () => this.setState({ navOpen: false }),
+      onSubmit: (e) => { e.preventDefault(); this.setState({ submitted: true }); },
+    };
+  }
+}
+</script>
+
+<!-- Scroll reveals via Motion inView() — https://motion.dev/docs/inview -->
+<script type="module">
+  const SEL = '[data-reveal]';
+  const all = () => Array.from(document.querySelectorAll(SEL));
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let inViewFn = null;
+  let armed = false;
+
+  /* Motion passes either the element or an info object ({ target, ... }) depending on version */
+  const reveal = (item) => {
+    const el = item instanceof Element ? item : item && item.target;
+    if (el) el.classList.add('fsv-in');
+  };
+
+  /* Bind inView to every not-yet-revealed [data-reveal] node currently in the DOM */
+  let bind = () => {};
+  bind = () => {
+    if (!inViewFn) return;
+    const pending = all().filter((el) => !el.classList.contains('fsv-in'));
+    pending.forEach((el) => el.classList.add('fsv-wait'));
+    if (pending.length) inViewFn(pending, reveal, { margin: '0px 0px -10% 0px' });
+  };
+
+  /* Failsafe: if Motion never becomes usable, un-hide everything */
+  const failsafe = setTimeout(() => {
+    if (!armed) all().forEach((el) => el.classList.remove('fsv-wait'));
+  }, 5000);
+
+  const start = async () => {
+    if (reduce) return;
+    try {
+      let mod;
+      try {
+        mod = await import('https://cdn.jsdelivr.net/npm/motion@12/+esm');
+      } catch {
+        mod = await import('https://esm.sh/motion@12'); /* fallback CDN */
+      }
+      inViewFn = mod.inView;
+      if (typeof inViewFn !== 'function') throw new Error('inView not exported');
+      armed = true;
+      clearTimeout(failsafe);
+      bind();
+      /* the dc runtime may re-mount sections after load: re-bind to fresh nodes */
+      let queued = false;
+      new MutationObserver(() => {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(() => { queued = false; bind(); });
+      }).observe(document.body, { childList: true, subtree: true });
+    } catch (err) {
+      all().forEach((el) => el.classList.remove('fsv-wait'));
+    }
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start, { once: true });
+  } else {
+    start();
+  }
+</script>
+</body>
 </html>
